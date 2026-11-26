@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日英文單字</title>
+<style>
+/* ── Variables ─────────────────────────────────────── */
+:root {
+  --bg:       #f1f5f9;
+  --surface:  #ffffff;
+  --surface2: #f8fafc;
+  --border:   #e2e8f0;
+  --shadow:   0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:0 4px 16px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.04);
+
+  --indigo:   #4f46e5;
+  --indigo-d: #4338ca;
+  --indigo-l: #eef2ff;
+  --green:    #16a34a;
+  --green-l:  #f0fdf4;
+  --red:      #dc2626;
+  --red-l:    #fef2f2;
+  --amber:    #d97706;
+  --amber-l:  #fffbeb;
+
+  --text:     #0f172a;
+  --text2:    #475569;
+  --text3:    #94a3b8;
+
+  --r:  12px;
+  --r2: 8px;
+}
+
+/* ── Reset & Base ──────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── Header ────────────────────────────────────────── */
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: var(--shadow);
+}
+.header-inner {
+  max-width: 1000px; margin: 0 auto;
+  padding: 0 24px;
+  display: flex; align-items: center; gap: 32px;
+}
+.logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; color: var(--text);
+  padding: 16px 0;
+  flex-shrink: 0;
+}
+.logo-icon { font-size: 24px; }
+.logo-text { font-size: 17px; font-weight: 700; }
+.logo-sub  { font-size: 11px; color: var(--text3); font-weight: 400; }
+
+nav { display: flex; gap: 2px; flex: 1; }
+.nav-link {
+  display: flex; align-items: center; gap: 7px;
+  padding: 18px 16px; font-size: 14px; font-weight: 500;
+  color: var(--text2); cursor: pointer; border: none;
+  background: none; border-bottom: 3px solid transparent;
+  transition: all .2s; white-space: nowrap;
+}
+.nav-link:hover { color: var(--indigo); }
+.nav-link.active { color: var(--indigo); border-bottom-color: var(--indigo); }
+.nav-icon { font-size: 16px; }
+
+.header-streak {
+  margin-left: auto; flex-shrink: 0;
+  display: flex; align-items: center; gap: 6px;
+  background: var(--amber-l); border: 1px solid #fde68a;
+  padding: 6px 14px; border-radius: 20px;
+  font-size: 13px; font-weight: 700; color: var(--amber);
+}
+
+/* ── Page wrapper ──────────────────────────────────── */
+#page {
+  max-width: 1000px; margin: 0 auto;
+  padding: 32px 24px 60px;
+}
+
+/* ── Cards ─────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.card-sm { padding: 16px 20px; }
+
+/* ── Section header ────────────────────────────────── */
+.section-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.section-head h2 { font-size: 20px; font-weight: 700; }
+.section-head .sub { font-size: 13px; color: var(--text3); }
+
+/* ── Buttons ───────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 11px 22px; border-radius: var(--r2); font-size: 14px;
+  font-weight: 600; cursor: pointer; border: none; transition: all .18s;
+  text-decoration: none;
+}
+.btn-primary { background: var(--indigo); color: #fff; }
+.btn-primary:hover { background: var(--indigo-d); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(79,70,229,.35); }
+.btn-primary:disabled { background: var(--border); color: var(--text3); cursor: not-allowed; transform: none; box-shadow: none; }
+.btn-outline { background: var(--surface); color: var(--indigo); border: 1.5px solid var(--indigo); }
+.btn-outline:hover { background: var(--indigo-l); }
+.btn-ghost  { background: var(--surface2); color: var(--text2); border: 1px solid var(--border); }
+.btn-ghost:hover  { background: var(--border); color: var(--text); }
+.btn-full   { width: 100%; }
+.btn-lg { padding: 14px 28px; font-size: 16px; }
+
+/* ── Tags ──────────────────────────────────────────── */
+.tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; letter-spacing: .3px; }
+.tag-pos   { background: var(--indigo-l); color: var(--indigo); }
+.tag-green { background: var(--green-l);  color: var(--green); }
+.tag-red   { background: var(--red-l);    color: var(--red); }
+.tag-amber { background: var(--amber-l);  color: var(--amber); }
+
+/* ── Progress bar ──────────────────────────────────── */
+.prog-bar-wrap { background: var(--border); border-radius: 99px; height: 6px; overflow: hidden; }
+.prog-bar-fill { height: 6px; background: var(--indigo); border-radius: 99px; transition: width .4s ease; }
+
+.step-dots { display: flex; gap: 5px; }
+.step-dot  {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--surface2); border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: var(--text3);
+}
+.step-dot.active { border-color: var(--indigo); color: var(--indigo); background: var(--indigo-l); }
+.step-dot.done   { background: var(--green); border-color: var(--green); color: #fff; }
+.step-dot.wrong  { background: var(--red);   border-color: var(--red);   color: #fff; }
+
+/* ── HOME ──────────────────────────────────────────── */
+.home-hero {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  border-radius: var(--r); padding: 36px 32px; color: #fff;
+  margin-bottom: 24px; display: flex; align-items: center; gap: 24px;
+}
+.home-hero-text h1 { font-size: 26px; font-weight: 800; margin-bottom: 6px; }
+.home-hero-text p  { font-size: 15px; opacity: .8; }
+.home-hero-emoji { font-size: 64px; margin-left: auto; flex-shrink: 0; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+.stat-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 20px 16px; text-align: center;
+  box-shadow: var(--shadow);
+}
+.stat-num   { font-size: 32px; font-weight: 800; color: var(--indigo); }
+.stat-label { font-size: 12px; color: var(--text3); margin-top: 2px; font-weight: 500; }
+
+.today-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 600px) { .today-grid { grid-template-columns: 1fr; } }
+
+.today-prog-wrap { display: flex; flex-wrap: wrap; gap: 7px; margin: 14px 0; }
+
+.wrong-list-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.wrong-list-item:last-child { border-bottom: none; }
+
+/* ── LEARN ─────────────────────────────────────────── */
+.learn-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  align-items: start;
+}
+@media (max-width: 680px) { .learn-layout { grid-template-columns: 1fr; } }
+
+.word-hero {
+  background: linear-gradient(145deg, #4f46e5, #7c3aed);
+  border-radius: var(--r); padding: 36px 24px; text-align: center; color: #fff;
+  box-shadow: var(--shadow-md);
+}
+.word-hero-word { font-size: 42px; font-weight: 800; letter-spacing: .5px; margin-bottom: 8px; }
+.word-hero-phonetic { font-size: 16px; opacity: .75; margin-bottom: 20px; }
+.tts-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 20px; border-radius: 20px;
+  background: rgba(255,255,255,.18); border: 1.5px solid rgba(255,255,255,.35);
+  color: #fff; font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: all .2s;
+}
+.tts-btn:hover, .tts-btn.playing { background: rgba(255,255,255,.32); border-color: #fff; }
+
+.meaning-block {
+  background: var(--indigo-l); border-radius: var(--r2);
+  padding: 16px 18px; margin-bottom: 14px;
+  border-left: 4px solid var(--indigo);
+}
+.meaning-pos { font-size: 11px; font-weight: 700; color: var(--indigo); margin-bottom: 6px; }
+.meaning-zh  { font-size: 22px; font-weight: 700; color: var(--text); }
+
+.example-block {
+  background: var(--surface2); border-radius: var(--r2); padding: 16px 18px;
+  font-size: 15px; line-height: 1.8; color: var(--text2);
+  border: 1px solid var(--border);
+}
+.example-block .hl { color: var(--indigo); font-weight: 700; border-bottom: 2px solid var(--indigo); }
+
+.example-tts-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 10px; padding: 5px 12px; border-radius: 20px;
+  background: var(--border); border: none; font-size: 12px;
+  color: var(--text2); cursor: pointer; transition: all .2s;
+}
+.example-tts-btn:hover { background: var(--indigo-l); color: var(--indigo); }
+
+.learn-nav { display: flex; gap: 10px; margin-top: 20px; }
+
+/* ── QUIZ ──────────────────────────────────────────── */
+.quiz-layout {
+  max-width: 640px; margin: 0 auto;
+}
+.quiz-header-row {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 24px;
+}
+.quiz-header-row h2 { font-size: 18px; font-weight: 700; }
+.score-pill {
+  background: var(--green-l); color: var(--green);
+  border: 1px solid #bbf7d0; border-radius: 20px;
+  padding: 5px 14px; font-size: 14px; font-weight: 700;
+}
+
+.quiz-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r); box-shadow: var(--shadow-md); padding: 32px;
+}
+.quiz-hint-label {
+  font-size: 12px; font-weight: 600; color: var(--text3);
+  text-transform: uppercase; letter-spacing: .6px; margin-bottom: 10px;
+}
+.blank-sentence {
+  font-size: 18px; line-height: 2; color: var(--text);
+  padding: 16px 20px; background: var(--surface2);
+  border-radius: var(--r2); margin-bottom: 8px;
+  border: 1px solid var(--border);
+}
+.blank-token {
+  display: inline-block; min-width: 90px; border-bottom: 2.5px solid var(--indigo);
+  color: var(--indigo); font-weight: 700; text-align: center; padding: 0 6px;
+}
+.zh-hint {
+  font-size: 13px; color: var(--text3); margin-bottom: 20px;
+  display: flex; align-items: center; gap: 8px;
+}
+
+.quiz-input {
+  width: 100%; padding: 16px 20px;
+  font-size: 20px; font-weight: 700; text-align: center; letter-spacing: 2px;
+  background: var(--surface2); border: 2px solid var(--border);
+  border-radius: var(--r2); color: var(--text); outline: none;
+  transition: border-color .2s, background .2s;
+  font-family: inherit;
+}
+.quiz-input:focus { border-color: var(--indigo); background: var(--surface); }
+.quiz-input.correct { border-color: var(--green); background: var(--green-l); color: var(--green); }
+.quiz-input.wrong   { border-color: var(--red);   background: var(--red-l);   color: var(--red); }
+
+.quiz-actions { display: flex; gap: 10px; margin-top: 14px; }
+
+/* ── CHOICE BUTTONS ────────────────────────────────── */
+.choice-list { display: flex; flex-direction: column; gap: 10px; margin: 20px 0 4px; }
+.choice-btn {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px; border-radius: 12px;
+  border: 1.5px solid var(--border); background: var(--surface);
+  cursor: pointer; font-size: 15px; text-align: left; width: 100%;
+  transition: border-color .15s, background .15s; font-family: inherit;
+}
+.choice-btn:hover:not(:disabled) { border-color: var(--indigo); background: var(--indigo-l); }
+.choice-label {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  background: var(--indigo-l); color: var(--indigo); font-weight: 700; font-size: 13px;
+}
+.choice-btn.reveal  { border-color: var(--green); background: var(--green-l); }
+.choice-btn.reveal .choice-label { background: var(--green); color: #fff; }
+.choice-btn.wrong   { border-color: var(--red);   background: var(--red-l); }
+.choice-btn.wrong .choice-label  { background: var(--red); color: #fff; }
+.choice-btn:disabled { cursor: default; opacity: .85; }
+
+.feedback-box {
+  margin-top: 16px; padding: 14px 18px; border-radius: var(--r2);
+  font-size: 14px; display: none; line-height: 1.6;
+}
+.feedback-box.show { display: block; }
+.feedback-box.correct { background: var(--green-l); border: 1px solid #bbf7d0; color: #15803d; }
+.feedback-box.wrong   { background: var(--red-l);   border: 1px solid #fecaca; }
+.feedback-box .ans    { font-size: 18px; font-weight: 800; color: var(--green); }
+.feedback-box .ans-wrong { font-size: 18px; font-weight: 800; color: var(--red); }
+
+/* ── GLOSS PANEL ───────────────────────────────────── */
+.gloss-panel {
+  margin-top: 14px; padding: 14px 16px;
+  background: var(--surface2); border-radius: var(--r2);
+  border: 1px solid var(--border);
+}
+.gloss-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+.gloss-item {
+  text-align: center; padding: 6px 10px;
+  background: var(--surface); border-radius: 8px;
+  border: 1px solid var(--border); min-width: 48px;
+}
+.gloss-item.target { border-color: var(--indigo); background: var(--indigo-l); }
+.gloss-word { font-size: 13px; font-weight: 600; color: var(--text1); }
+.gloss-item.target .gloss-word { color: var(--indigo); font-weight: 800; }
+.gloss-zh   { font-size: 11px; color: var(--text3); margin-top: 2px; white-space: nowrap; }
+.gloss-item.target .gloss-zh { color: var(--indigo); }
+
+/* ── RESULTS ───────────────────────────────────────── */
+.results-hero {
+  text-align: center; padding: 48px 24px 32px;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  border-radius: var(--r); color: #fff; margin-bottom: 24px;
+  box-shadow: var(--shadow-md);
+}
+.results-emoji  { font-size: 56px; margin-bottom: 12px; }
+.results-score  { font-size: 72px; font-weight: 900; line-height: 1; }
+.results-denom  { font-size: 28px; font-weight: 400; opacity: .7; }
+.results-label  { font-size: 18px; opacity: .85; margin-top: 8px; }
+
+.result-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 0; border-bottom: 1px solid var(--border);
+}
+.result-row:last-child { border-bottom: none; }
+.result-status { font-size: 20px; }
+.result-word   { font-size: 16px; font-weight: 700; flex: 1; }
+.result-zh     { font-size: 13px; color: var(--text2); }
+.result-tts    { font-size: 18px; cursor: pointer; padding: 4px 8px; border-radius: 50%; border: none; background: none; transition: background .15s; }
+.result-tts:hover { background: var(--indigo-l); }
+
+/* ── HISTORY ───────────────────────────────────────── */
+.hist-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; align-items: start; }
+@media (max-width: 680px) { .hist-grid { grid-template-columns: 1fr; } }
+
+.hist-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+
+.cal-wrapper { }
+.cal-labels  { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; margin-bottom: 4px; }
+.cal-label   { font-size: 10px; color: var(--text3); text-align: center; font-weight: 600; }
+.cal-grid    { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; }
+.cal-cell    {
+  aspect-ratio: 1; border-radius: 4px;
+  background: var(--surface2); border: 1px solid var(--border);
+  transition: background .2s;
+}
+.cal-cell.done  { background: var(--indigo); border-color: var(--indigo); }
+.cal-cell.today { box-shadow: 0 0 0 2px var(--amber); }
+.cal-legend { display: flex; gap: 16px; margin-top: 10px; font-size: 11px; color: var(--text3); align-items: center; }
+.leg-dot { width: 12px; height: 12px; border-radius: 3px; }
+
+.wrong-word-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.wrong-word-row:last-child { border-bottom: none; }
+.ww-word  { font-weight: 700; flex: 1; }
+.ww-zh    { font-size: 12px; color: var(--text2); }
+.ww-badge { background: var(--red-l); color: var(--red); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+
+.speed-wrap { display: flex; align-items: center; gap: 12px; }
+.speed-wrap input[type=range] { flex: 1; accent-color: var(--indigo); }
+.speed-val { font-size: 14px; font-weight: 700; color: var(--indigo); min-width: 36px; }
+
+/* ── Misc ──────────────────────────────────────────── */
+.empty { text-align: center; padding: 48px 20px; color: var(--text3); }
+.empty-icon { font-size: 48px; margin-bottom: 12px; }
+.divider { height: 1px; background: var(--border); margin: 16px 0; }
+.text-sm { font-size: 13px; color: var(--text2); }
+.mt-1 { margin-top: 6px; }
+.mt-2 { margin-top: 12px; }
+.mt-3 { margin-top: 20px; }
+.flex-end { display: flex; justify-content: flex-end; }
+
+/* fade-in animation */
+.fade { animation: fadeUp .28s ease both; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+/* responsive nav label hiding */
+@media (max-width: 480px) {
+  .nav-link { padding: 16px 10px; font-size: 12px; gap: 4px; }
+  .header-streak { display: none; }
+  #page { padding: 20px 14px 40px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-icon">📚</span>
+      <div>
+        <div class="logo-text">每日英文單字</div>
+        <div class="logo-sub">每天 10 個 · TOEIC 核心詞彙</div>
+      </div>
+    </div>
+    <nav>
+      <button class="nav-link active" id="nav-home"    onclick="go('home')">   <span class="nav-icon">🏠</span> 首頁</button>
+      <button class="nav-link"        id="nav-learn"   onclick="go('learn')">  <span class="nav-icon">📖</span> 學習</button>
+      <button class="nav-link"        id="nav-quiz"    onclick="go('quiz')">   <span class="nav-icon">✏️</span> 測驗</button>
+      <button class="nav-link"        id="nav-history" onclick="go('history')"><span class="nav-icon">📊</span> 紀錄</button>
+    </nav>
+    <div class="header-streak" id="header-streak">🔥 <span id="streak-num">0</span> 天</div>
+  </div>
+</header>
+
+<!-- Main page -->
+<main id="page"></main>
+
+<script>
+// ════════════════════════════════════════════════════
+// WORD BANK  (150 TOEIC words)
+// ════════════════════════════════════════════════════
+const RAW=[
+[1,"accomplish","/əˈkʌmplɪʃ/","v.","完成；達成","She worked hard to {w} all her goals before the deadline.","她努力在截止日期前完成了所有目標。"],
+[2,"accurate","/ˈækjərɪt/","adj.","準確的；精確的","Please make sure the report is {w} before you send it to the client.","請確認報告正確無誤再發送給客戶。"],
+[3,"achieve","/əˈtʃiːv/","v.","達到；實現","It takes dedication and effort to {w} success in any field.","在任何領域取得成功都需要投入與努力。"],
+[4,"adjust","/əˈdʒʌst/","v.","調整；適應","You may need to {w} your schedule to attend the morning meeting.","你可能需要調整行程以出席早上的會議。"],
+[5,"advertise","/ˈædvərtaɪz/","v.","廣告；宣傳","The company decided to {w} its new product on social media.","公司決定在社群媒體上宣傳新產品。"],
+[6,"agenda","/əˈdʒendə/","n.","議程；待辦事項","Could you please send me the {w} for tomorrow's meeting?","能否請你發送明天會議的議程給我？"],
+[7,"agreement","/əˈɡriːmənt/","n.","協議；合約","Both companies signed the {w} after several rounds of negotiation.","兩家公司在多輪談判後簽署了協議。"],
+[8,"allocate","/ˈæləkeɪt/","v.","分配；撥出","The manager will {w} tasks to each team member this afternoon.","經理今天下午將分配任務給每位團隊成員。"],
+[9,"analyze","/ˈænəlaɪz/","v.","分析","We need to {w} the sales data before making any decisions.","我們在做任何決定前需要先分析銷售數據。"],
+[10,"announce","/əˈnaʊns/","v.","宣布；公告","The CEO will {w} the new company policy at Friday's meeting.","執行長將在週五的會議上宣布新公司政策。"],
+[11,"application","/ˌæplɪˈkeɪʃn/","n.","申請；應用","She submitted her {w} for the marketing position last week.","她上週提交了行銷職位的申請。"],
+[12,"appointment","/əˈpɔɪntmənt/","n.","預約；約定","I have a doctor's {w} at 3 PM, so I'll leave the office early.","我下午三點有醫生預約，所以我會提早離開辦公室。"],
+[13,"approve","/əˈpruːv/","v.","批准；認可","The board needs to {w} the budget before the project can begin.","董事會需要批准預算，計畫才能開始。"],
+[14,"assist","/əˈsɪst/","v.","協助；幫助","Our customer service team is always ready to {w} you with any questions.","我們的客服團隊隨時準備好協助您解答任何問題。"],
+[15,"attend","/əˈtend/","v.","出席；參加","All employees are required to {w} the safety training session.","所有員工都必須出席安全培訓課程。"],
+[16,"available","/əˈveɪləbl/","adj.","可用的；有空的","Please let me know if you are {w} for a call on Wednesday morning.","如果你週三早上有空接聽電話，請告知我。"],
+[17,"beneficial","/ˌbenɪˈfɪʃl/","adj.","有益的","Regular exercise is {w} to both physical and mental health.","定期運動對身心健康都有益處。"],
+[18,"budget","/ˈbʌdʒɪt/","n.","預算","The team stayed within the {w} and finished the project on time.","團隊保持在預算範圍內，並按時完成了計畫。"],
+[19,"cancel","/ˈkænsl/","v.","取消","They had to {w} the outdoor event because of heavy rain.","由於大雨，他們不得不取消戶外活動。"],
+[20,"candidate","/ˈkændɪdeɪt/","n.","候選人；應徵者","We interviewed five {w}s for the position of sales manager.","我們為業務經理職位面試了五位候選人。"],
+[21,"capable","/ˈkeɪpəbl/","adj.","有能力的；能幹的","She is a {w} leader who always gets the job done efficiently.","她是一位能幹的領導者，總能有效率地完成工作。"],
+[22,"client","/ˈklaɪənt/","n.","客戶","Our team met with the {w} to discuss the new project requirements.","我們的團隊與客戶會面討論新計畫需求。"],
+[23,"colleague","/ˈkɒliːɡ/","n.","同事","I asked my {w} to review the report before I submitted it.","我請同事在我提交前審閱報告。"],
+[24,"competitive","/kəmˈpetɪtɪv/","adj.","有競爭力的","We need to offer a {w} salary to attract top talent.","我們需要提供有競爭力的薪資以吸引頂尖人才。"],
+[25,"complaint","/kəmˈpleɪnt/","n.","投訴；抱怨","The manager handled the customer {w} quickly and professionally.","經理迅速而專業地處理了客戶投訴。"],
+[26,"complete","/kəmˈpliːt/","v.","完成","Please {w} the form and return it to the front desk by noon.","請填寫表格並在中午前交回前台。"],
+[27,"conference","/ˈkɒnfərəns/","n.","會議；大會","We will hold the annual {w} in Taipei this November.","我們將於今年11月在台北舉辦年度大會。"],
+[28,"confirm","/kənˈfɜːrm/","v.","確認","Please {w} your attendance by replying to this email.","請回覆此郵件確認您的出席。"],
+[29,"consistent","/kənˈsɪstənt/","adj.","一致的；持續的","Good results come from {w} effort every single day.","好的結果來自每天持續的努力。"],
+[30,"contact","/ˈkɒntækt/","v.","聯絡","Please {w} the IT department if you experience any technical issues.","如果您遇到任何技術問題，請聯絡IT部門。"],
+[31,"contract","/ˈkɒntrækt/","n.","合約","Both parties agreed to sign the {w} by the end of the month.","雙方同意在月底前簽署合約。"],
+[32,"convenient","/kənˈviːniənt/","adj.","方便的","The new office location is very {w} — it's close to the subway.","新辦公室的位置非常方便，就在地鐵附近。"],
+[33,"cooperate","/koʊˈɒpəreɪt/","v.","合作","All departments need to {w} to make this project a success.","所有部門都需要合作才能使這個計畫成功。"],
+[34,"deadline","/ˈdedlaɪn/","n.","截止日期","The {w} for submitting the report is this Friday at 5 PM.","提交報告的截止日期是本週五下午五點。"],
+[35,"dedicate","/ˈdedɪkeɪt/","v.","致力於；奉獻","She chose to {w} her career to helping others in the community.","她選擇將職業生涯奉獻給社區服務。"],
+[36,"deliver","/dɪˈlɪvər/","v.","遞送；傳達","The courier will {w} the package to your office by noon tomorrow.","快遞員將在明天中午前將包裹送到您的辦公室。"],
+[37,"demonstrate","/ˈdemənstreɪt/","v.","展示；示範","The trainer will {w} how to use the new software system.","培訓師將示範如何使用新的軟體系統。"],
+[38,"department","/dɪˈpɑːrtmənt/","n.","部門","She transferred to the marketing {w} last month.","她上個月調到行銷部門。"],
+[39,"develop","/dɪˈveləp/","v.","開發；發展","The company plans to {w} a new mobile app for its customers.","公司計畫為客戶開發一款新的手機應用程式。"],
+[40,"discount","/ˈdɪskaʊnt/","n.","折扣","Loyal customers receive a 10% {w} on all purchases.","忠實客戶所有消費享有九折優惠。"],
+[41,"discuss","/dɪˈskʌs/","v.","討論","Let's {w} the budget issue in tomorrow morning's meeting.","我們在明天早上的會議中討論預算問題吧。"],
+[42,"distribute","/dɪˈstrɪbjuːt/","v.","分發；分配","Please {w} the meeting notes to all team members.","請將會議記錄分發給所有團隊成員。"],
+[43,"document","/ˈdɒkjumənt/","n.","文件","Please attach all the required {w}s to your application.","請在申請表中附上所有必要文件。"],
+[44,"efficient","/ɪˈfɪʃnt/","adj.","有效率的","This new system is much more {w} than the old one.","這個新系統比舊系統更有效率。"],
+[45,"encourage","/ɪnˈkɜːrɪdʒ/","v.","鼓勵","The manager always {w}s the team to share new ideas.","經理總是鼓勵團隊分享新想法。"],
+[46,"essential","/ɪˈsenʃl/","adj.","必要的；基本的","Good communication skills are {w} in any workplace.","良好的溝通能力在任何職場都是必要的。"],
+[47,"establish","/ɪˈstæblɪʃ/","v.","建立；設立","The company was {w}ed over 30 years ago in Taipei.","該公司在台北成立已超過三十年。"],
+[48,"evaluate","/ɪˈvæljueɪt/","v.","評估","Managers will {w} each employee's performance at year end.","經理們將在年底評估每位員工的績效。"],
+[49,"expand","/ɪkˈspænd/","v.","擴大；擴展","The company plans to {w} into new markets in Southeast Asia.","公司計畫拓展進入東南亞的新市場。"],
+[50,"experience","/ɪkˈspɪəriəns/","n.","經驗","She has over ten years of {w} in project management.","她擁有超過十年的專案管理經驗。"],
+[51,"facility","/fəˈsɪlɪti/","n.","設施；設備","The new building has excellent {w} including a gym and cafeteria.","新大樓擁有優良設施，包括健身房和餐廳。"],
+[52,"feedback","/ˈfiːdbæk/","n.","意見回饋","Please give me your honest {w} on my presentation.","請就我的簡報給我誠實的意見回饋。"],
+[53,"flexible","/ˈfleksɪbl/","adj.","彈性的；靈活的","The company offers {w} working hours to help employees balance their lives.","公司提供彈性工作時間，幫助員工平衡生活。"],
+[54,"generate","/ˈdʒenəreɪt/","v.","產生；創造","The new campaign helped {w} a lot of interest in the product.","新廣告活動幫助產生了很多對產品的興趣。"],
+[55,"guarantee","/ˌɡærənˈtiː/","v.","保證","We {w} that your order will arrive within three business days.","我們保證您的訂單將在三個工作日內送達。"],
+[56,"improve","/ɪmˈpruːv/","v.","改善；提升","Practicing every day is the best way to {w} your English skills.","每天練習是提升英語能力的最佳方式。"],
+[57,"indicate","/ˈɪndɪkeɪt/","v.","表明；指出","The data {w}s that sales have increased by 20% this quarter.","數據顯示本季銷售額成長了20%。"],
+[58,"innovative","/ˈɪnəveɪtɪv/","adj.","創新的","The team came up with an {w} solution to the problem.","團隊提出了一個創新的解決方案。"],
+[59,"install","/ɪnˈstɔːl/","v.","安裝","Our IT team will {w} the new software on your computer today.","我們的IT團隊今天將在您的電腦上安裝新軟體。"],
+[60,"invoice","/ˈɪnvɔɪs/","n.","發票；請款單","The supplier sent the {w} for the equipment we ordered last week.","供應商寄來了我們上週訂購設備的發票。"],
+[61,"maintain","/meɪnˈteɪn/","v.","維持；保持","It is important to {w} a positive attitude even during difficult times.","即使在困難時期，保持積極的態度也很重要。"],
+[62,"manage","/ˈmænɪdʒ/","v.","管理；設法","She was able to {w} her workload effectively even during the busy season.","即使在旺季，她也能有效管理自己的工作量。"],
+[63,"measure","/ˈmeʒər/","v.","衡量；測量","We need to {w} the success of this campaign by tracking the numbers.","我們需要透過追蹤數字來衡量這次活動的成效。"],
+[64,"motivate","/ˈmoʊtɪveɪt/","v.","激勵","A good leader knows how to {w} the team to perform at its best.","好的領導者知道如何激勵團隊發揮最佳表現。"],
+[65,"negotiate","/nɪˈɡoʊʃieɪt/","v.","談判；協商","We will {w} the terms of the contract with the supplier next week.","我們下週將與供應商談判合約條款。"],
+[66,"notify","/ˈnoʊtɪfaɪ/","v.","通知","Please {w} all team members about the schedule change as soon as possible.","請盡快通知所有團隊成員時間表變更。"],
+[67,"objective","/əbˈdʒektɪv/","n.","目標；目的","The main {w} of this project is to increase customer satisfaction.","這個計畫的主要目標是提升客戶滿意度。"],
+[68,"obtain","/əbˈteɪn/","v.","獲得；取得","You need to {w} permission from your manager before taking time off.","請假前需要取得主管的許可。"],
+[69,"operate","/ˈɒpəreɪt/","v.","操作；營運","The factory {w}s 24 hours a day to meet the high demand.","工廠每天24小時運作以滿足高需求。"],
+[70,"opportunity","/ˌɒpəˈtjuːnɪti/","n.","機會","This job is a great {w} to develop your skills and grow your career.","這份工作是發展技能、推進職業生涯的絕佳機會。"],
+[71,"organize","/ˈɔːrɡənaɪz/","v.","組織；安排","Could you help me {w} the files in the shared folder?","能幫我整理共用資料夾中的文件嗎？"],
+[72,"outstanding","/ˌaʊtˈstændɪŋ/","adj.","傑出的","She received an award for her {w} performance this year.","她因今年傑出的表現而獲獎。"],
+[73,"participate","/pɑːrˈtɪsɪpeɪt/","v.","參加；參與","All staff are encouraged to {w} in the company wellness program.","鼓勵所有員工參加公司健康計畫。"],
+[74,"perform","/pərˈfɔːrm/","v.","執行；表現","The new employee {w}s her tasks quickly and accurately.","新員工快速而準確地執行她的工作。"],
+[75,"persuade","/pərˈsweɪd/","v.","說服","He managed to {w} the client to extend the contract for another year.","他成功說服客戶再延長一年合約。"],
+[76,"policy","/ˈpɒlɪsi/","n.","政策；規定","Please read the company's {w} on working from home carefully.","請仔細閱讀公司的居家辦公規定。"],
+[77,"position","/pəˈzɪʃn/","n.","職位；位置","She applied for the {w} of regional sales manager last month.","她上個月申請了區域業務經理的職位。"],
+[78,"prepare","/prɪˈpeər/","v.","準備","Please {w} a summary of this quarter's sales for the board meeting.","請為董事會會議準備本季銷售摘要。"],
+[79,"present","/prɪˈzent/","v.","呈現；報告","He will {w} the new marketing strategy to the leadership team tomorrow.","他明天將向領導團隊呈現新的行銷策略。"],
+[80,"procedure","/prəˈsiːdʒər/","n.","程序；步驟","Please follow the standard {w} when submitting expense reports.","提交費用報告時請遵循標準程序。"],
+[81,"productive","/prəˈdʌktɪv/","adj.","有生產力的","Starting the day with a clear plan makes me much more {w}.","以清晰的計畫開始新的一天讓我更有生產力。"],
+[82,"professional","/prəˈfeʃənl/","adj.","專業的","Always maintain a {w} tone in your emails to clients.","在給客戶的郵件中始終保持專業語氣。"],
+[83,"profit","/ˈprɒfɪt/","n.","利潤；獲利","The company's {w} increased by 15% compared to last year.","與去年相比，公司的利潤增長了15%。"],
+[84,"promote","/prəˈmoʊt/","v.","促銷；晉升","She was {w}d to senior manager after three years with the company.","她在公司任職三年後被晉升為資深經理。"],
+[85,"proposal","/prəˈpoʊzl/","n.","提案；建議書","The team submitted a detailed {w} to the client yesterday.","團隊昨天向客戶提交了一份詳細的提案。"],
+[86,"provide","/prəˈvaɪd/","v.","提供","The company will {w} training for all new employees.","公司將為所有新員工提供培訓。"],
+[87,"purchase","/ˈpɜːrtʃɪs/","v.","購買","You can {w} the software online and download it immediately.","您可以在線上購買軟體並立即下載。"],
+[88,"qualified","/ˈkwɒlɪfaɪd/","adj.","合格的；有資格的","We are looking for a {w} engineer with at least five years of experience.","我們正在尋找至少有五年經驗的合格工程師。"],
+[89,"receive","/rɪˈsiːv/","v.","收到","I {w}d an email from the client requesting a meeting this week.","我收到客戶的郵件，請求本週安排一次會議。"],
+[90,"recommend","/ˌrekəˈmend/","v.","推薦；建議","I would {w} this restaurant to anyone visiting the city.","我會向任何造訪這座城市的人推薦這家餐廳。"],
+[91,"reduce","/rɪˈduːs/","v.","減少；降低","The company is looking for ways to {w} operating costs this year.","公司正在尋找今年降低營運成本的方法。"],
+[92,"reliable","/rɪˈlaɪəbl/","adj.","可靠的；穩定的","We need a {w} supplier who can deliver on time every month.","我們需要一個每月都能準時交貨的可靠供應商。"],
+[93,"replace","/rɪˈpleɪs/","v.","取代；替換","We need to {w} the old printer in the office — it keeps breaking down.","我們需要更換辦公室的舊印表機，它一直出問題。"],
+[94,"report","/rɪˈpɔːrt/","n.","報告","Please submit your monthly {w} by the end of this week.","請在本週結束前提交每月報告。"],
+[95,"request","/rɪˈkwest/","v.","要求；請求","I would like to {w} a day off on Friday for a personal appointment.","我想申請週五請一天假處理個人事務。"],
+[96,"require","/rɪˈkwaɪər/","v.","需要；要求","This job {w}s excellent communication skills and attention to detail.","這份工作需要出色的溝通能力和對細節的注意。"],
+[97,"resolve","/rɪˈzɒlv/","v.","解決","The customer service team was able to {w} the issue within 24 hours.","客服團隊能夠在24小時內解決問題。"],
+[98,"respond","/rɪˈspɒnd/","v.","回應；回覆","Please {w} to the client's email as soon as possible.","請盡快回覆客戶的郵件。"],
+[99,"responsible","/rɪˈspɒnsɪbl/","adj.","負責的","She is {w} for managing the company's social media accounts.","她負責管理公司的社群媒體帳號。"],
+[100,"revenue","/ˈrevənjuː/","n.","收入；營業額","The company's {w} grew by 25% in the third quarter.","公司第三季的收入增長了25%。"],
+[101,"review","/rɪˈvjuː/","v.","審查；複習","Could you please {w} my report before I send it to the manager?","在我發送給經理之前，能否請你審查我的報告？"],
+[102,"schedule","/ˈskedʒuːl/","n.","時間表；行程","Let's arrange a meeting based on your {w} next week.","讓我們根據你下週的時間表安排一次會議。"],
+[103,"significant","/sɪɡˈnɪfɪkənt/","adj.","重要的；顯著的","There has been a {w} improvement in customer satisfaction this month.","本月客戶滿意度有了顯著的提升。"],
+[104,"strategy","/ˈstræt̬ədʒi/","n.","策略；戰略","The marketing team developed a new {w} to reach younger customers.","行銷團隊制定了一套新策略來觸及年輕客群。"],
+[105,"submit","/səbˈmɪt/","v.","提交；呈遞","Please {w} your expense report by the 15th of each month.","請在每月15日前提交費用報告。"],
+[106,"successful","/səkˈsesfəl/","adj.","成功的","The product launch was very {w} — we sold out within two days.","產品發布非常成功，我們在兩天內就售罄了。"],
+[107,"suitable","/ˈsuːɪtəbl/","adj.","適合的","We are looking for a {w} candidate who fits our company culture.","我們正在尋找適合公司文化的合適人選。"],
+[108,"supervisor","/ˈsuːpərvaɪzər/","n.","主管；上司","You should inform your {w} if you need to leave the office early.","如果你需要提早離開辦公室，應通知你的主管。"],
+[109,"support","/səˈpɔːrt/","v.","支持；協助","The IT team is available to {w} you with any technical problems.","IT團隊可以支援您解決任何技術問題。"],
+[110,"survey","/ˈsɜːrveɪ/","n.","調查；問卷","We conducted a customer {w} to understand their needs better.","我們進行了客戶調查，以更了解他們的需求。"],
+[111,"thorough","/ˈθɜːrəʊ/","adj.","徹底的；仔細的","Please do a {w} check of the document before sending it out.","請在寄出文件前進行徹底的檢查。"],
+[112,"training","/ˈtreɪnɪŋ/","n.","培訓；訓練","New employees must complete a one-week {w} program before starting work.","新員工在開始工作前必須完成為期一週的培訓課程。"],
+[113,"transfer","/ˈtrænsfɜːr/","v.","轉移；調任","She requested a {w} to the company's branch in Singapore.","她申請調任到公司的新加坡分公司。"],
+[114,"update","/ˈʌpdeɪt/","v.","更新；通知","Please {w} the client on the progress of the project every Friday.","請每週五向客戶更新計畫進度。"],
+[115,"urgent","/ˈɜːrdʒənt/","adj.","緊急的","There is an {w} matter that requires your immediate attention.","有一件緊急事項需要您立即關注。"],
+[116,"utilize","/ˈjuːtɪlaɪz/","v.","利用；使用","We should {w} the available resources to complete the project efficiently.","我們應善加利用現有資源，有效率地完成計畫。"],
+[117,"valuable","/ˈvæljuəbl/","adj.","有價值的；寶貴的","Your feedback is very {w} and will help us improve our service.","您的意見回饋非常寶貴，有助於我們改善服務。"],
+[118,"verify","/ˈverɪfaɪ/","v.","核實；確認","Please {w} that all the information in the form is correct before submitting.","請在提交前確認表單中所有資訊是否正確。"],
+[119,"withdraw","/wɪðˈdrɔː/","v.","撤回；取消","He decided to {w} his application for the position after receiving another offer.","在收到另一份工作邀約後，他決定撤回這個職位的申請。"],
+[120,"attract","/əˈtrækt/","v.","吸引","The store uses bright colors and special offers to {w} more customers.","商店用鮮豔的顏色和特別優惠吸引更多顧客。"],
+[121,"balance","/ˈbæləns/","n.","平衡","It is important to {w} your work responsibilities with personal time.","平衡工作責任與個人時間是很重要的。"],
+[122,"challenge","/ˈtʃælɪndʒ/","n.","挑戰","Starting a new job is always a {w}, but it is also very rewarding.","開始新工作總是一大挑戰，但也非常有成就感。"],
+[123,"compare","/kəmˈpeər/","v.","比較","Let's {w} the costs of the two options before making a decision.","讓我們在做決定前比較兩個選項的費用。"],
+[124,"contribute","/kənˈtrɪbjuːt/","v.","貢獻；促成","Every team member should {w} ideas during the brainstorming session.","每位團隊成員都應在腦力激盪會議中貢獻想法。"],
+[125,"distinguish","/dɪˈstɪŋɡwɪʃ/","v.","區分；辨別","It can be hard to {w} between the two products — they look very similar.","很難區分這兩種產品，它們看起來非常相似。"],
+[126,"influence","/ˈɪnfluəns/","v.","影響","A great leader can {w} the team to work harder and smarter.","偉大的領導者能影響團隊更努力、更聰明地工作。"],
+[127,"recognize","/ˈrekəɡnaɪz/","v.","認識；認可","The company was quick to {w} her outstanding contribution to the team.","公司很快認可了她對團隊的傑出貢獻。"],
+[128,"reflect","/rɪˈflekt/","v.","反映；反省","Your work should {w} the high standards we have set for this company.","您的工作應反映我們為公司設定的高標準。"],
+[129,"register","/ˈredʒɪstər/","v.","登記；報名","Please {w} for the workshop by filling out the online form.","請填寫線上表單報名參加研討會。"],
+[130,"retain","/rɪˈteɪn/","v.","保留；留住","The company offers excellent benefits to {w} its best employees.","公司提供優厚的福利以留住最優秀的員工。"],
+[131,"satisfy","/ˈsætɪsfaɪ/","v.","滿足；使滿意","Our goal is to {w} every customer who walks through our door.","我們的目標是滿足每一位走進我們門的客戶。"],
+[132,"specify","/ˈspesɪfaɪ/","v.","指定；說明","Please {w} which date and time works best for the meeting.","請說明哪個日期和時間最適合開會。"],
+[133,"strengthen","/ˈstreŋθn/","v.","加強；鞏固","Regular practice will {w} your English speaking skills over time.","定期練習將隨著時間加強您的英語口語能力。"],
+[134,"summarize","/ˈsʌməraɪz/","v.","總結；概括","Could you {w} the key points of the meeting in a short email?","能否在一封簡短的郵件中總結會議的重點？"],
+[135,"terminate","/ˈtɜːrmɪneɪt/","v.","終止；結束","The company decided to {w} the contract due to repeated delays.","由於多次延誤，公司決定終止合約。"],
+[136,"transform","/trænsˈfɔːrm/","v.","改變；轉變","The renovation completely {w}ed the office into a modern workspace.","裝修將辦公室完全改造成現代化的工作空間。"],
+[137,"translate","/trænsˈleɪt/","v.","翻譯","Could you help me {w} this document from English to Chinese?","能幫我將這份文件從英文翻譯成中文嗎？"],
+[138,"access","/ˈækses/","v.","存取；使用","You need a password to {w} the company's internal database.","您需要密碼才能存取公司的內部資料庫。"],
+[139,"benefit","/ˈbenɪfɪt/","n.","好處；受益","Employees {w} from the company's generous health insurance package.","員工從公司優厚的健康保險方案中受益。"],
+[140,"capacity","/kəˈpæsɪti/","n.","容量；能力","The meeting room has a {w} of 20 people.","會議室的容納人數為20人。"],
+[141,"coordinate","/koʊˈɔːrdɪneɪt/","v.","協調；安排","She will {w} the event and make sure everything runs smoothly.","她將協調活動並確保一切順利進行。"],
+[142,"estimate","/ˈestɪmɪt/","n.","估算；預估","The contractor gave us an {w} for the renovation work.","承包商給了我們裝修工程的預估報價。"],
+[143,"prioritize","/praɪˈɒrɪtaɪz/","v.","優先處理","You need to {w} your tasks so you can focus on the most important ones first.","您需要優先排序任務，以便先專注於最重要的事項。"],
+[144,"initiative","/ɪˈnɪʃətɪv/","n.","主動性；提案","She showed great {w} by volunteering to lead the new project.","她自願領導新計畫，展現了極大的主動性。"],
+[145,"invest","/ɪnˈvest/","v.","投資","The company decided to {w} more money in employee training this year.","公司決定今年投入更多資金進行員工培訓。"],
+[146,"launch","/lɔːntʃ/","v.","推出；發行","We plan to {w} the new product at the end of this quarter.","我們計畫在本季末推出新產品。"],
+[147,"renew","/rɪˈnjuː/","v.","更新；續約","We need to {w} the contract before it expires next month.","我們需要在下個月到期前續約。"],
+[148,"cooperate","/koʊˈɒpəreɪt/","v.","合作協調","The two teams need to {w} closely to meet the project deadline.","兩個團隊需要密切合作才能在截止日期前完成計畫。"],
+[149,"communicate","/kəˈmjuːnɪkeɪt/","v.","溝通；傳達","It is important to {w} clearly with your team about project updates.","與團隊清晰溝通計畫進度是非常重要的。"],
+[150,"accomplish","/əˈkʌmplɪʃ/","v.","實現；完成","With the right mindset, you can {w} anything you set out to do.","有了正確的心態，你可以完成你所設定的任何目標。"]
+];
+
+const WORDS = RAW.map(([id,word,phonetic,pos,zh,raw,zhFull])=>({
+  id, word, phonetic, pos, zh, zhFull, cat:'toeic',
+  full: raw.replace(/\{w\}/g, word),
+  blank: raw.replace(/\{w\}/, '___').replace(/\{w\}/, '___')
+}));
+
+// ════════════════════════════════════════════════════
+// NBA WORD BANK (IDs 201–350)
+// ════════════════════════════════════════════════════
+const NBA_RAW = [
+[201,"inspire","/ɪnˈspaɪər/","v.","激勵；啟發","Durant's work ethic continues to {w} the next generation of players to push their limits.","杜蘭特的職業道德持續激勵著下一代球員突破自我極限。"],
+[202,"veteran","/ˈvetərən/","n.","老將；資深人員","The {w} guard shared his playoff experience with the nervous rookies before tip-off.","老將後衛在開球前與緊張的新秀們分享了他的季後賽經驗。"],
+[203,"dominant","/ˈdɒmɪnənt/","adj.","主導的；佔優勢的","Jokić delivered a {w} performance, controlling both the paint and the perimeter all night.","約基奇帶來了主導性的表現，整晚掌控了禁區和外線。"],
+[204,"consecutive","/kənˈsekjətɪv/","adj.","連續的","The Lakers won five {w} games to climb to the top of the Western Conference standings.","湖人連勝五場，爬升至西區積分榜首位。"],
+[205,"momentum","/məˈmentəm/","n.","動能；氣勢","The Warriors built {w} in the third quarter with a 15-0 scoring run that silenced the crowd.","勇士在第三節以一波15比0的攻勢積累氣勢，讓全場觀眾噤聲。"],
+[206,"clutch","/klʌtʃ/","adj.","關鍵時刻的","Maxey hit a {w} three-pointer with 10 seconds left to seal the victory for his team.","馬克西在剩餘10秒時投進關鍵三分球，為球隊鎖定勝局。"],
+[207,"rookie","/ˈrʊki/","n.","新秀；菜鳥","The {w} center surprised everyone by recording a double-double in his very first NBA game.","新秀中鋒在NBA首場比賽就記錄了雙十，讓所有人大吃一驚。"],
+[208,"roster","/ˈrɒstər/","n.","球員名單；陣容","The team adjusted its {w} before the trade deadline to add more experienced depth.","球隊在交易截止日期前調整了名單，增加了更有經驗的陣容深度。"],
+[209,"fracture","/ˈfræktʃər/","n.","骨折","The star player suffered a {w} in his right leg and will miss the remainder of the season.","明星球員右腿骨折，將缺席本賽季剩餘的比賽。"],
+[210,"eliminate","/ɪˈlɪmɪneɪt/","v.","淘汰；消除","The Celtics managed to {w} the defending champions in a thrilling seven-game series.","凱爾特人在驚心動魄的七場系列賽中成功淘汰了衛冕冠軍。"],
+[211,"championship","/ˈtʃæmpiənʃɪp/","n.","冠軍賽；錦標賽","Winning the {w} has been LeBron's ultimate goal since he first entered the NBA.","贏得總冠軍自LeBron進入NBA以來一直是他的終極目標。"],
+[212,"rebound","/ˈriːbaʊnd/","n.","籃板球；反彈","Grabbing the defensive {w} quickly is the key to starting a successful fast break.","迅速搶到防守籃板球是發動成功快攻的關鍵。"],
+[213,"assist","/əˈsɪst/","n.","助攻；協助","Jokić recorded his 12th {w} of the game, setting a new personal record for the season.","約基奇在這場比賽記錄了第12次助攻，創下本賽季個人新紀錄。"],
+[214,"perimeter","/pəˈrɪmɪtər/","n.","外線；周邊","The team's ability to shoot from the {w} opened up driving lanes for their guards.","球隊從外線投射的能力為後衛們打開了切入的通道。"],
+[215,"fundamental","/ˌfʌndəˈmentl/","n.","基本功；基礎","Mastering the {w}s of passing and footwork is what separates good players from great ones.","掌握傳球和步法的基本功是區分優秀球員和偉大球員的關鍵。"],
+[216,"consistent","/kənˈsɪstənt/","adj.","一致的；穩定的","Durant has been one of the most {w} scorers in NBA history for over 18 seasons.","杜蘭特18個賽季以來一直是NBA歷史上最穩定的得分手之一。"],
+[217,"milestone","/ˈmaɪlstəʊn/","n.","里程碑","Scoring his 30,000th career point was a remarkable {w} that only a handful of players have reached.","職業生涯得分突破3萬分是一個卓越的里程碑，只有極少數球員達到過。"],
+[218,"surreal","/səˈriːl/","adj.","不真實的；超現實的","For the rookie, playing against his childhood hero on national TV felt completely {w}.","對新秀來說，在全國電視轉播中對陣兒時偶像感覺完全超現實。"],
+[219,"endorsement","/ɪnˈdɔːrsmənt/","n.","代言；認可","The young star earned a major sneaker {w} deal after his incredible playoff performance.","年輕球星在令人難以置信的季後賽表現後，獲得了一份重要的球鞋代言合約。"],
+[220,"tribute","/ˈtrɪbjuːt/","n.","致敬；讚揚","Fans paid {w} to the retiring legend by giving him a standing ovation at every arena.","球迷在每個球場起立鼓掌，向即將退役的傳奇致敬。"],
+[221,"longevity","/lɒnˈdʒevəti/","n.","長期活躍；長壽","LeBron's {w} in the league is a result of his strict diet, fitness routine, and mental focus.","LeBron在聯盟的長期活躍是他嚴格飲食、健身計畫和精神專注的結果。"],
+[222,"archetype","/ˈɑːrkɪtaɪp/","n.","原型；典範","Wembanyama viewed Durant as the perfect {w} for a tall, skilled scorer who can shoot from anywhere.","文班亞馬視杜蘭特為高大技術全面、可在任何地方投籃的完美原型。"],
+[223,"blueprint","/ˈbluːprɪnt/","n.","藍圖；計畫","The coaching staff followed their defensive {w} closely to slow down the opposing offense.","教練組嚴格遵循他們的防守藍圖，放慢對方的進攻節奏。"],
+[224,"versatile","/ˈvɜːrsətl/","adj.","多才多藝的；全能的","A {w} player who can guard multiple positions is extremely valuable in today's NBA.","能夠防守多個位置的全能球員在今日NBA中極具價值。"],
+[225,"explosive","/ɪkˈspləʊsɪv/","adj.","爆發力強的；驚人的","His {w} first step allows him to get past defenders before they can react.","他爆炸性的第一步讓他在防守者來不及反應前就突破防線。"],
+[226,"aggressive","/əˈɡresɪv/","adj.","積極的；好鬥的","You need to be more {w} when attacking the basket instead of settling for jump shots.","攻擊籃框時你需要更積極，而不是滿足於跳投。"],
+[227,"competitive","/kəmˈpetɪtɪv/","adj.","競爭性強的；好勝的","The most {w} players hate losing even a simple practice drill or a friendly bet.","最具競爭精神的球員連練習訓練或友好打賭都討厭輸。"],
+[228,"legendary","/ˈledʒəndri/","adj.","傳奇的","Curry's {w} three-point shooting has permanently changed how basketball is played at every level.","柯瑞傳奇性的三分球投射技術已永久改變了各個層級打籃球的方式。"],
+[229,"iconic","/aɪˈkɒnɪk/","adj.","標誌性的；有代表性的","That buzzer-beater in Game 7 became one of the most {w} moments in Finals history.","第七場比賽的壓哨球成為總決賽史上最具代表性的時刻之一。"],
+[230,"elite","/ɪˈliːt/","adj.","頂尖的；精英的","Only a handful of players in every generation reach the {w} level that Durant has maintained.","每個時代只有極少數球員能達到杜蘭特所保持的頂尖水準。"],
+[231,"dedication","/ˌdedɪˈkeɪʃn/","n.","奉獻；投入","His {w} to improving his weak hand made him a much more complete player by his second year.","他對改進弱手的奉獻讓他在第二年成為更全面的球員。"],
+[232,"discipline","/ˈdɪsɪplɪn/","n.","紀律；自律","The team's {w} on the defensive end is why they give up fewer points than any other team.","球隊在防守端的紀律是他們比任何其他球隊失分更少的原因。"],
+[233,"perseverance","/ˌpɜːrsɪˈvɪərəns/","n.","毅力；堅持不懈","After two torn knee ligaments, his {w} through rehab earned him the team's comeback award.","在兩次膝蓋韌帶撕裂後，他在復健過程中的毅力使他獲得了球隊的復出獎。"],
+[234,"resilience","/rɪˈzɪliəns/","n.","韌性；復原力","The team showed great {w} by coming back from 20 points down to win in overtime.","球隊在落後20分後逆轉在加時賽中獲勝，展現了強大的韌性。"],
+[235,"determination","/dɪˌtɜːrmɪˈneɪʃn/","n.","決心；決意","Her {w} to reach the WNBA despite multiple setbacks made her story truly inspiring.","儘管多次遭遇挫折，她進入WNBA的決心使她的故事真正令人鼓舞。"],
+[236,"ambition","/æmˈbɪʃn/","n.","雄心；抱負","His {w} to win a championship is what drives him to practice for hours after everyone else goes home.","他贏得冠軍的雄心是驅使他在其他人回家後繼續練習數小時的動力。"],
+[237,"commitment","/kəˈmɪtmənt/","n.","承諾；投入","The coach praised the rookie's {w} to learning the team's complex defensive system.","教練稱讚了新秀學習球隊複雜防守體系的投入精神。"],
+[238,"sacrifice","/ˈsækrɪfaɪs/","n.","犧牲","Winning a title requires real {w}, including giving up personal stats for the good of the team.","贏得冠軍需要真正的犧牲，包括為了球隊利益放棄個人數據。"],
+[239,"legacy","/ˈleɡəsi/","n.","遺產；遺留影響","Kobe's {w} lives on through the countless young players who model their game after his.","科比的傳奇透過無數以他為榜樣的年輕球員繼續延續。"],
+[240,"influence","/ˈɪnfluəns/","n.","影響；影響力","Curry's {w} on the game extended to every level, from the NBA down to youth leagues worldwide.","柯瑞對比賽的影響延伸到各個層面，從NBA到全球的青少年聯賽。"],
+[241,"strategy","/ˈstrætədʒi/","n.","策略；戰術","The head coach adjusted his offensive {w} at halftime to attack the defense from different angles.","主教練在中場休息時調整了進攻策略，從不同角度攻擊防守。"],
+[242,"rotation","/rəʊˈteɪʃn/","n.","輪替；輪轉","The coach used a tight {w} of eight players during the playoffs to keep the best legs fresh.","教練在季後賽中使用八人緊密輪換，以保持主力球員的體力。"],
+[243,"transition","/trænˈzɪʃn/","n.","過渡；轉換","The team excels in {w} offense, turning turnovers into fast-break points better than anyone.","球隊在過渡進攻方面表現出色，比任何人都更善於將失誤轉化為快攻得分。"],
+[244,"execution","/ˌeksɪˈkjuːʃn/","n.","執行；完成","Great {w} in the final two minutes is what wins close playoff games, not just talent.","最後兩分鐘出色的執行力才是贏得季後賽近身戰的關鍵，而不僅僅是天賦。"],
+[245,"possession","/pəˈzeʃn/","n.","持球；控球","Every {w} matters in a one-point game, so the team focused on taking care of the ball.","在一分勝負的比賽中每次持球都很重要，所以球隊專注於保護球權。"],
+[246,"turnover","/ˈtɜːrnəʊvər/","n.","失誤；周轉","Reducing {w}s in the fourth quarter was the key adjustment that helped the team win the series.","減少第四節的失誤是幫助球隊贏得系列賽的關鍵調整。"],
+[247,"adjustment","/əˈdʒʌstmənt/","n.","調整；適應","The team made a quick {w} at halftime that completely changed the momentum of the game.","球隊在中場時迅速做出調整，完全改變了比賽的走勢。"],
+[248,"scheme","/skiːm/","n.","戰術方案；計畫","The defensive {w} focused on forcing the opposing star to his weak side on every possession.","防守戰術著重於每次持球都迫使對方明星球員走向弱側。"],
+[249,"comeback","/ˈkʌmbæk/","n.","逆轉；復出","Trailing by 18 in the fourth quarter, the team mounted an incredible {w} to win by two.","在第四節落後18分的情況下，球隊創造了令人難以置信的逆轉，以兩分之差獲勝。"],
+[250,"upset","/ˈʌpset/","n.","爆冷；大冷門","The eighth-seeded team pulled off a massive {w} by defeating the top seed in the first round.","第八種子隊在首輪擊敗頭號種子隊，製造了重大冷門。"],
+[251,"triumph","/ˈtraɪʌmf/","n.","勝利；凱旋","Their {w} in the Finals was the result of years of hard work, sacrifice, and team unity.","他們在總決賽的勝利是多年努力、犧牲和團隊凝聚力的結果。"],
+[252,"advance","/ədˈvɑːns/","v.","晉級；前進","With the win, the team will {w} to the Eastern Conference Finals for the first time in a decade.","憑藉這場勝利，球隊將首次闖入東部決賽，距上次已有十年之久。"],
+[253,"compete","/kəmˈpiːt/","v.","競爭；參賽","The young squad has shown it can {w} with the best teams in the league on any given night.","這支年輕的球隊已展示出在任何夜晚都能與聯盟最強球隊競爭的實力。"],
+[254,"retire","/rɪˈtaɪər/","v.","退役；退休","The star player announced plans to {w} at the end of the season after 20 years in the league.","這位明星球員宣布計畫在本賽季結束後退役，結束20年的聯盟生涯。"],
+[255,"negotiate","/nɪˈɡəʊʃieɪt/","v.","談判；協商","Both sides failed to {w} a contract extension before the deadline, so the trade was canceled.","雙方未能在截止日期前談判好合約延期，因此交易被取消。"],
+[256,"acquire","/əˈkwaɪər/","v.","獲得；取得","The team managed to {w} a proven scorer at the trade deadline to strengthen the starting lineup.","球隊在交易截止日前成功獲得一位經過驗證的得分手，以加強首發陣容。"],
+[257,"suspend","/səˈspend/","v.","暫停；停賽","The league decided to {w} the player for two games following his flagrant foul in Sunday's match.","聯盟決定因週日比賽中的惡意犯規，停賽這名球員兩場比賽。"],
+[258,"penalty","/ˈpenəlti/","n.","罰則；懲罰","The team had to pay a heavy {w} for going over the salary cap with the additional signing.","球隊因增簽球員超出薪資上限而不得不支付高額罰款。"],
+[259,"recover","/rɪˈkʌvər/","v.","恢復；復原","Doctors expect the player to fully {w} from the ankle sprain within three to four weeks.","醫生預計球員將在三到四週內完全從踝關節扭傷中恢復。"],
+[260,"rehabilitation","/ˌriːəˌbɪlɪˈteɪʃn/","n.","復健；康復","He spent six months in {w} after knee surgery before returning to full-contact practice.","他在膝蓋手術後花了六個月進行復健，才重返全接觸訓練。"],
+[261,"injury","/ˈɪndʒəri/","n.","傷病；傷害","The team's season fell apart after key players suffered season-ending {w}s in consecutive weeks.","球隊在連續幾週主要球員遭受賽季終結性傷病後，整個賽季就此崩潰。"],
+[262,"surgery","/ˈsɜːrdʒəri/","n.","手術","He will undergo {w} on his fractured leg on Wednesday and faces months of recovery.","他將於週三接受骨折腿部手術，面臨數月的恢復期。"],
+[263,"diagnosis","/ˌdaɪəɡˈnəʊsɪs/","n.","診斷","The team received the {w} that the star guard has a torn meniscus and will need surgery.","球隊收到診斷結果，明星後衛半月板撕裂，需要手術治療。"],
+[264,"strain","/streɪn/","n.","拉傷；緊張","The forward suffered a hamstring {w} in practice and will miss at least two weeks of games.","前鋒在訓練中大腿後肌拉傷，至少將缺席兩週的比賽。"],
+[265,"prevention","/prɪˈvenʃn/","n.","預防","Injury {w} is a top priority for all NBA teams, which is why training loads are carefully managed.","傷病預防是所有NBA球隊的首要任務，這就是為什麼訓練負荷需要謹慎管理。"],
+[266,"condition","/kənˈdɪʃn/","n.","狀態；條件","The player worked hard during the off-season to get into the best {w} of his career.","球員在休季期間努力訓練，使自己進入職業生涯最佳狀態。"],
+[267,"endurance","/ɪnˈdjʊərəns/","n.","耐力；持久力","Building {w} during preseason is crucial for maintaining energy levels through an 82-game schedule.","季前賽期間建立耐力對於維持整個82場賽程中的體力至關重要。"],
+[268,"strength","/streŋθ/","n.","力量；實力","His physical {w} in the post allows him to overpower smaller defenders and draw easy fouls.","他在低位的身體力量讓他能夠壓制較小的防守者並輕鬆製造犯規。"],
+[269,"agility","/əˈdʒɪlɪti/","n.","敏捷性；靈活性","Her {w} on the court allows her to change direction quickly and blow past slower defenders.","她在球場上的敏捷性讓她能夠快速改變方向，超越較慢的防守者。"],
+[270,"highlight","/ˈhaɪlaɪt/","n.","精彩片段；亮點","That between-the-legs dunk became the top {w} on every sports network after Sunday's game.","那個跨腿扣籃成為週日比賽後每個體育頻道的頭號精彩片段。"],
+[271,"broadcast","/ˈbrɔːdkɑːst/","v.","播出；廣播","The championship game will be {w} live to over 200 countries around the world this weekend.","本週末冠軍賽將向全球200多個國家進行直播。"],
+[272,"analysis","/əˈnæləsɪs/","n.","分析","The post-game {w} revealed that the team shot only 23% from three-point range in the second half.","賽後分析顯示球隊下半場從三分線投籃命中率僅有23%。"],
+[273,"commentator","/ˈkɒmenteɪtər/","n.","解說員；評論員","The {w} called it the greatest individual performance he had witnessed in 30 years of covering the sport.","解說員稱這是他在30年體育報導生涯中見過的最偉大個人表現。"],
+[274,"criticize","/ˈkrɪtɪsaɪz/","v.","批評；批判","Many fans began to {w} the coach's late-game decisions after the team blew three leads in a row.","在球隊連續三次丟失領先優勢後，許多球迷開始批評教練的末節決策。"],
+[275,"praise","/preɪz/","v.","稱讚；讚美","The head coach was quick to {w} his team's defensive effort after holding the opponent to 88 points.","在將對手控制在88分後，主教練迅速稱讚了球隊的防守努力。"],
+[276,"rank","/ræŋk/","v.","排名；評級","Many experts {w} Wembanyama as one of the most unique talents ever to enter the NBA.","許多專家將文班亞馬列為有史以來進入NBA最獨特的天賦之一。"],
+[277,"predict","/prɪˈdɪkt/","v.","預測；預言","Few analysts dared to {w} that the small-market team would make it all the way to the Finals.","很少有分析師敢預測這支小市場球隊能一路殺進總決賽。"],
+[278,"speculate","/ˈspekjəleɪt/","v.","猜測；推測","Reporters began to {w} about a trade after the star player skipped two straight practices.","在明星球員連續缺席兩次訓練後，記者們開始猜測可能有交易。"],
+[279,"feature","/ˈfiːtʃər/","v.","以…為主角；以…為特色","This week's cover story will {w} the rookie who went from undrafted to All-Star in his first season.","本週封面故事將以這位從未被選秀到首賽季入選全明星的新秀為主角。"],
+[280,"award","/əˈwɔːrd/","n.","獎項；獎勵","Winning the MVP {w} was a dream come true for the player who grew up watching the ceremony on TV.","贏得MVP獎項對於從小在電視上觀看頒獎典禮長大的球員來說是夢想成真。"],
+[281,"ceremony","/ˈserəməni/","n.","典禮；儀式","The retirement {w} drew thousands of fans who wanted to give the legend one final farewell.","退役典禮吸引了數千名球迷前來，為這位傳奇送上最後的道別。"],
+[282,"honor","/ˈɒnər/","v.","表彰；授予榮譽","The arena will {w} the team's first championship with a banner-raising ceremony before the opening game.","球館將在開幕賽前舉行升旗典禮，表彰球隊的首個冠軍。"],
+[283,"celebrate","/ˈselɪbreɪt/","v.","慶祝","Thousands of fans flooded the streets to {w} the team's first championship in franchise history.","數千名球迷湧上街頭，慶祝球隊歷史上第一個冠軍。"],
+[284,"rival","/ˈraɪvl/","n.","對手；競爭者","Their matchup against their longtime {w} always draws the highest TV ratings of the regular season.","他們與老對手的對決總是吸引整個常規賽最高的電視收視率。"],
+[285,"dynasty","/ˈdaɪnəsti/","n.","王朝；強盛時期","The team built a {w} in the 2010s by keeping their core together and refusing to rebuild.","球隊在2010年代通過保持核心陣容不解體、拒絕重建而建立了王朝。"],
+[286,"franchise","/ˈfræntʃaɪz/","n.","球隊；特許權","The city is desperate for a star player to build the {w} around for the next decade.","這座城市迫切需要一位明星球員，作為未來十年球隊建設的核心。"],
+[287,"scout","/skaʊt/","v.","球探；探察","The team's {w}s spent two years tracking the European player before recommending him in the first round.","球隊的球探花了兩年時間追蹤這位歐洲球員，然後才在首輪推薦他。"],
+[288,"draft","/drɑːft/","n.","選秀","Winning the {w} lottery gave the struggling team the first overall pick and a chance to rebuild quickly.","贏得選秀抽籤給了這支掙扎的球隊第一順位選秀權和快速重建的機會。"],
+[289,"trade","/treɪd/","n.","交易","The blockbuster {w} sent three players and two first-round picks to the other team for the superstar.","這筆震撼交易將三名球員和兩個首輪選秀權送往對方，以換取這位超級巨星。"],
+[290,"contract","/ˈkɒntrækt/","n.","合約","The player agreed to a maximum {w} extension that will keep him with the team for five more years.","球員同意了最大額合約延期，這將讓他在球隊再效力五年。"],
+[291,"extension","/ɪkˈstenʃn/","n.","延長合約","Signing a long-term {w} before the deadline was a priority for both the player and the front office.","在截止日期前簽訂長期合約延期是球員和管理層雙方的優先事項。"],
+[292,"free agent","/friː ˈeɪdʒənt/","n.","自由球員","As a {w}, he received offers from six teams before choosing to stay with the team that drafted him.","作為自由球員，他在收到六支球隊的報價後，選擇留在選中他的球隊。"],
+[293,"salary","/ˈsæləri/","n.","薪資","The superstar's annual {w} of over 50 million dollars makes him one of the highest-paid athletes in the world.","這位超級巨星超過5000萬美元的年薪使他成為世界上薪酬最高的運動員之一。"],
+[294,"sponsor","/ˈspɒnsər/","n.","贊助商","The league announced a new arena naming rights deal with a major technology {w} this week.","聯盟本週宣布與一家主要科技贊助商達成新的球館冠名權協議。"],
+[295,"partnership","/ˈpɑːtnərʃɪp/","n.","合作關係；夥伴關係","The two superstars formed a deadly {w} on the court that proved impossible for defenses to stop.","兩位超級巨星在球場上形成了一個致命的搭檔，讓防守無從應對。"],
+[296,"atmosphere","/ˈætməsfɪər/","n.","氣氛；氛圍","The {w} inside the arena during Game 7 was unlike anything the players had ever experienced before.","第七場比賽時球館內的氣氛是球員們之前從未體驗過的。"],
+[297,"passion","/ˈpæʃn/","n.","熱情；激情","You can see the {w} in his eyes every time he steps on the court, no matter the score.","無論比分如何，每次他踏上球場時你都能看到他眼中的熱情。"],
+[298,"mentorship","/ˈmentərʃɪp/","n.","師徒關係；指導","The young player credits the veteran's {w} as the reason he improved so quickly in his second year.","年輕球員將自己第二年進步如此迅速歸功於老將的指導。"],
+[299,"potential","/pəˈtenʃl/","n.","潛力","Scouts believe the teenager has the {w} to become one of the greatest players in league history.","球探相信這位青少年有潛力成為聯盟歷史上最偉大的球員之一。"],
+[300,"reputation","/ˌrepjuˈteɪʃn/","n.","聲譽；名聲","His {w} as the most clutch player in the league was confirmed by his fourth game-winner this season.","他作為聯盟最關鍵球員的聲譽在本賽季第四次致勝球中得到了證實。"],
+[301,"era","/ˈɪərə/","n.","時代；年代","Most analysts consider this the greatest {w} in basketball history due to the depth of talent.","由於人才的深度，大多數分析師認為這是籃球史上最偉大的時代。"],
+[302,"generation","/ˌdʒenəˈreɪʃn/","n.","世代；一代","Every {w} of basketball fans has been lucky enough to witness at least one truly transcendent player.","每一代籃球球迷都有幸見證至少一位真正超凡絕倫的球員。"],
+[303,"rival","/ˈraɪvl/","n.","對手；競爭者","The classic {w} matchup between the two superstars draws millions of viewers every single time.","兩位超級巨星之間的經典對手對決每次都吸引數百萬觀眾收看。"],
+[304,"spectacular","/spekˈtækjələr/","adj.","壯觀的；令人驚嘆的","He made a {w} one-handed catch-and-dunk that brought the entire arena to its feet in amazement.","他做了一個精彩的單手接球扣籃，讓整個球館的觀眾驚嘆起立。"],
+[305,"remarkable","/rɪˈmɑːrkəbl/","adj.","非凡的；卓越的","What makes his journey {w} is that he was cut from his high school team before becoming an MVP.","他的旅程之所以非凡，是因為他在成為MVP之前曾被高中球隊淘汰。"],
+[306,"tremendous","/trɪˈmendəs/","adj.","巨大的；驚人的","The team has shown {w} improvement on defense since the new assistant coach joined the staff.","自新助理教練加入以來，球隊在防守端展現了巨大的進步。"],
+[307,"underdog","/ˈʌndədɒɡ/","n.","不被看好者；弱隊","As a true {w}, the team embraced the role of having nothing to lose and played with total freedom.","作為真正的不被看好者，球隊接受了無所失去的角色，以完全自由的方式比賽。"],
+[308,"overcome","/ˌəʊvərˈkʌm/","v.","克服；戰勝","Watching him {w} the ankle injury and return in the fourth quarter showed the whole team his toughness.","看著他克服踝傷在第四節復出，向整個球隊展示了他的堅韌。"],
+[309,"demonstrate","/ˈdemənstreɪt/","v.","展示；證明","He used the press conference to {w} why his team is the clear favorite to win the championship.","他利用新聞發布會展示為什麼他的球隊是贏得冠軍的明顯熱門。"],
+[310,"dominate","/ˈdɒmɪneɪt/","v.","主宰；稱霸","The rookie center began to {w} the paint in his second season, averaging 15 rebounds per game.","新秀中鋒在第二賽季開始主宰禁區，場均抓下15個籃板球。"],
+[311,"accelerate","/əkˈseləreɪt/","v.","加速；促進","The young team hopes to {w} their development by playing against top competition in the playoffs.","年輕球隊希望通過與季後賽頂級競爭對手的對抗加速自身發展。"],
+[312,"anticipate","/ænˈtɪsɪpeɪt/","v.","預料；期待","Great defenders {w} the opponent's moves before they happen, making the game look effortless.","優秀的防守者能在對手行動前預判其動作，讓比賽看起來毫不費力。"],
+[313,"frustrate","/frʌˈstreɪt/","v.","使沮喪；阻礙","The zone defense was designed to {w} the opposing star and force his teammates to beat them.","這個區域防守是專門為了讓對方明星球員感到沮喪，迫使其隊友來擊敗他們。"],
+[314,"intensify","/ɪnˈtensɪfaɪ/","v.","加劇；加強","Fans expect the rivalry to {w} now that both teams look set to meet in the conference finals.","球迷預期在兩隊看似將在分區決賽相遇的情況下，對抗將會更加激烈。"],
+[315,"pursue","/pərˈsjuː/","v.","追求；追逐","After winning his first title, he decided to {w} a second championship with the same determination.","在贏得第一個冠軍後，他決定以同樣的決心追求第二個冠軍。"],
+[316,"impress","/ɪmˈpres/","v.","使印象深刻","The rookie managed to {w} the coaching staff during preseason and earned a spot on the opening-night roster.","新秀在季前賽成功讓教練組留下深刻印象，並獲得了開幕戰名單上的一席之地。"],
+[317,"struggle","/ˈstrʌɡl/","v.","掙扎；奮鬥","The team continued to {w} from the three-point line, making just 28% of their attempts last week.","球隊繼續在三分線投射上掙扎，上週投籃命中率僅有28%。"],
+[318,"emerge","/ɪˈmɜːrdʒ/","v.","出現；脫穎而出","He began to {w} as the team's leader when the veteran point guard went down with a knee injury.","當老將控球後衛因膝蓋受傷倒下時，他開始脫穎而出成為球隊的領袖。"],
+[319,"evolve","/ɪˈvɒlv/","v.","演變；發展","The game has {w}d significantly over the past two decades, placing a much bigger premium on shooting.","在過去二十年中，這項運動已顯著演變，對投射能力的重視程度大幅提升。"],
+[320,"transform","/trænsˈfɔːrm/","v.","改變；轉型","The new head coach has worked hard to {w} the team's culture from one of losing to one of winning.","新任主教練努力將球隊的文化從失敗者轉變為勝利者。"],
+[321,"impact","/ˈɪmpækt/","n.","影響；衝擊","His positive {w} on the locker room culture was just as important as his contributions on the court.","他對更衣室文化的積極影響與他在球場上的貢獻同樣重要。"],
+[322,"intensity","/ɪnˈtensɪti/","n.","強度；激烈程度","The {w} of a Game 7 on the road is something only the most experienced players can handle well.","客場第七場比賽的激烈程度只有最有經驗的球員才能應對自如。"],
+[323,"pressure","/ˈpreʃər/","n.","壓力","Great players don't just handle {w}, they rise above it and deliver when their team needs them most.","偉大的球員不只是承受壓力，他們在球隊最需要的時候超越壓力並交出成績。"],
+[324,"confidence","/ˈkɒnfɪdəns/","n.","自信","Hitting those early shots built his {w}, and by the second half he was unstoppable from anywhere.","早期那幾個投進的球建立了他的自信，到了下半場他在任何地方都無法被阻擋。"],
+[325,"teamwork","/ˈtiːmwɜːrk/","n.","團隊合作","The championship was a testament to pure {w}, as no single player averaged more than 20 points.","這個冠軍是純粹團隊合作的見證，因為沒有任何一位球員場均超過20分。"],
+[326,"motivate","/ˈməʊtɪveɪt/","v.","激勵；鼓舞","The coach used the team's playoff failure last year to {w} his players throughout the entire off-season.","教練利用球隊去年季後賽的失敗，整個休賽季激勵球員。"],
+[327,"commit","/kəˈmɪt/","v.","承諾；投入","The star has decided to {w} his next four years to this city rather than chasing a bigger market.","這位明星決定將接下來四年奉獻給這座城市，而不是追逐更大的市場。"],
+[328,"dominate","/ˈdɒmɪneɪt/","v.","主宰；占主導地位","When healthy, he is capable of {w} a game on both ends of the court in a way few players can.","健康時，他能夠以少有球員能做到的方式在球場兩端主宰比賽。"],
+[329,"efficient","/ɪˈfɪʃnt/","adj.","高效率的","An {w} offense that takes the right shot every time is far more valuable than pure athleticism.","每次都能找到正確投籃機會的高效率進攻，遠比純粹的運動能力更有價值。"],
+[330,"creative","/kriˈeɪtɪv/","adj.","有創意的；創新的","His {w} passing ability to find teammates in impossible situations separates him from other point guards.","他在不可能的情況下找到隊友的創意傳球能力，讓他與其他控球後衛截然不同。"],
+[331,"athletic","/æθˈletɪk/","adj.","運動能力強的","Despite his height, he is one of the most {w} centers the league has ever seen at that size.","儘管身高如此，他仍是聯盟有史以來這個身材中最具運動能力的中鋒之一。"],
+[332,"physical","/ˈfɪzɪkl/","adj.","強壯的；身體的","The series turned increasingly {w} as both teams realized that offense alone would not decide the winner.","隨著兩隊意識到光靠進攻無法決定勝者，這個系列賽變得越來越激烈對抗。"],
+[333,"mental","/ˈmentl/","adj.","心理的；精神的","His {w} toughness after coming back from two major surgeries is what separates him from his peers.","在兩次大手術後復出的心理韌性，是他與同輩球員的區別所在。"],
+[334,"emotional","/ɪˈməʊʃənl/","adj.","情緒化的；動人的","The retirement speech was deeply {w} as teammates and opponents alike shared their favorite memories.","隊友和對手都分享了他們最喜愛的記憶，退役演講深深令人動容。"],
+[335,"dramatic","/drəˈmætɪk/","adj.","戲劇性的；激動人心的","A {w} buzzer-beater to send the game to overtime sent the crowd into an absolute frenzy.","一個戲劇性的壓哨球將比賽送入延長賽，讓觀眾陷入瘋狂。"],
+[336,"historic","/hɪˈstɒrɪk/","adj.","歷史性的","The team's 73-win season was considered a {w} achievement that might never be equaled again.","球隊的73勝賽季被認為是一項可能永遠無法被超越的歷史性成就。"],
+[337,"unbeaten","/ʌnˈbiːtn/","adj.","不敗的；未嘗敗績的","The {w} team started the season with 12 straight wins, raising expectations across the entire league.","這支不敗球隊以開季12連勝開始本賽季，提升了整個聯盟的期望。"],
+[338,"consistent","/kənˈsɪstənt/","adj.","一致的；持續的","Being {w} every single night, regardless of the opponent, is the hallmark of a true superstar.","無論對手如何，每晚都保持穩定，是真正超級球星的標誌。"],
+[339,"dominant","/ˈdɒmɪnənt/","adj.","主宰的；佔主導的","Their {w} run through the playoffs included winning every series without going to a seventh game.","他們在季後賽中的主導性征程包括贏得每個系列賽而不需要打第七場。"],
+[340,"competitive","/kəmˈpetɪtɪv/","adj.","競爭激烈的","The Eastern Conference is now extremely {w} from top to bottom, making every game meaningful.","東部聯盟現在從上到下都極具競爭性，讓每場比賽都充滿意義。"],
+[341,"career","/kəˈrɪər/","n.","職業生涯","At age 38, he is still competing at the highest level, defying the natural limits of an NBA {w}.","在38歲時，他仍在最高水準上競爭，挑戰NBA職業生涯的自然極限。"],
+[342,"performance","/pərˈfɔːrməns/","n.","表現；演出","His {w} in Game 6, with 50 points and 15 rebounds, is considered one of the greatest in Finals history.","他在第六場的表現，50分加15個籃板，被認為是總決賽史上最偉大的之一。"],
+[343,"achievement","/əˈtʃiːvmənt/","n.","成就；成績","Joining the 30,000-point club is a career {w} that only the greatest scorers in history have reached.","加入3萬分俱樂部是一項只有歷史上最偉大得分手才能達到的職業成就。"],
+[344,"excellence","/ˈeksələns/","n.","卓越；優秀","The team has built a culture of {w} by holding every player, from the star to the backup, to the same standard.","球隊通過對每位球員（從明星到替補）保持相同標準，建立了卓越文化。"],
+[345,"sacrifice","/ˈsækrɪfaɪs/","v.","犧牲；放棄","He chose to {w} personal scoring statistics in order to help his teammates win a championship ring.","他選擇犧牲個人得分數據，以幫助隊友贏得冠軍戒指。"],
+[346,"overcome","/ˌəʊvərˈkʌm/","v.","戰勝；克服","She worked for three years to {w} the knee injury and return to the form that made her an All-Star.","她花了三年時間克服膝蓋傷病，恢復到讓她成為全明星的狀態。"],
+[347,"transform","/trænsˈfɔːrm/","v.","轉變；改造","The offseason signing helped {w} an average team into a legitimate championship contender overnight.","休賽季的簽約幫助將一支普通球隊一夜之間轉變為真正的冠軍競爭者。"],
+[348,"inspire","/ɪnˈspaɪər/","v.","啟發；給予靈感","His story of going undrafted and becoming a champion continues to {w} thousands of young players.","他從未被選秀到成為冠軍的故事繼續激勵著數千名年輕球員。"],
+[349,"pursue","/pərˈsjuː/","v.","追求；追逐","He made it clear he will {w} a second championship with the same hunger he had before winning the first.","他明確表示，他將以贏得第一個冠軍之前相同的渴望去追求第二個冠軍。"],
+[350,"legacy","/ˈleɡəsi/","n.","傳承；影響","Building a lasting {w} requires more than just winning — it means changing the game itself.","建立持久的傳承不僅僅需要贏得比賽，而是意味著改變比賽本身。"]
+];
+const NBA_WORDS = NBA_RAW.map(([id,word,phonetic,pos,zh,raw,zhFull])=>({
+  id, word, phonetic, pos, zh, zhFull, cat:'nba',
+  full: raw.replace(/\{w\}/g, word),
+  blank: raw.replace(/\{w\}/, '___').replace(/\{w\}/, '___')
+}));
+const ALL_WORDS = [...WORDS, ...NBA_WORDS];
+
+// ════════════════════════════════════════════════════
+// Common-word glossary (for sentence annotation)
+// ════════════════════════════════════════════════════
+const COMMON={
+  // ── Articles / Determiners
+  the:'（冠詞）',a:'（冠詞）',an:'（冠詞）',
+  this:'這個',that:'那個',these:'這些',those:'那些',
+  each:'每個',every:'每個',both:'兩者都',either:'任一',neither:'兩者都不',
+  some:'一些',any:'任何',many:'許多',much:'很多',few:'幾個',little:'一點點',
+  all:'所有',both:'兩者都',half:'一半',
+  // ── Pronouns
+  i:'我',me:'我（受格）',my:'我的',mine:'我的（所有格）',myself:'我自己',
+  you:'你',your:'你的',yours:'你的',yourself:'你自己',
+  he:'他',him:'他（受格）',his:'他的',himself:'他自己',
+  she:'她',her:'她（受格/所有格）',hers:'她的',herself:'她自己',
+  it:'它',its:'它的',itself:'它本身',
+  we:'我們',us:'我們（受格）',our:'我們的',ours:'我們的',ourselves:'我們自己',
+  they:'他們',them:'他們（受格）',their:'他們的',theirs:'他們的',themselves:'他們自己',
+  who:'誰',whom:'誰（受格）',whose:'誰的',what:'什麼',which:'哪個',
+  // ── Be verb
+  be:'是',is:'是',are:'是',was:'是（過去）',were:'是（過去）',been:'是（過去分詞）',being:'是（進行）',
+  // ── Have
+  have:'有',has:'有',had:'有（過去）',having:'有（進行）',
+  // ── Do
+  do:'做',does:'做',did:'做（過去）',done:'做（過去分詞）',doing:'做（進行）',
+  // ── Modals
+  will:'將會',would:'會',can:'能夠',could:'能夠（過去）',
+  shall:'應',should:'應該',may:'可能',might:'可能',
+  must:'必須',ought:'應當',need:'需要',dare:'敢',
+  // ── Conjunctions / Connectors
+  and:'和',or:'或',but:'但是',so:'所以',yet:'然而',nor:'也不',
+  if:'如果',unless:'除非',whether:'是否',
+  that:'那',which:'哪個',who:'誰',when:'當…時',where:'在哪裡',
+  while:'同時/當…時',whereas:'而',as:'當/因為/像',
+  because:'因為',since:'自從/因為',although:'雖然',though:'雖然',
+  however:'然而',therefore:'因此',thus:'因此',hence:'因此',
+  moreover:'此外',furthermore:'此外',nevertheless:'儘管如此',
+  meanwhile:'同時',afterward:'之後',otherwise:'否則',
+  // ── Prepositions
+  in:'在…內',on:'在…上',at:'在',by:'由/靠近',for:'為了',
+  with:'和/用',to:'到/對',from:'從',of:'的',about:'關於',
+  into:'進入',through:'透過',during:'在…期間',
+  before:'之前',after:'之後',between:'之間',
+  over:'超過/在上方',under:'在…下方',above:'在…上方',below:'在…下方',
+  around:'環繞/大約',along:'沿著',across:'穿越',against:'對抗/靠著',
+  without:'沒有',within:'在…之內',beyond:'超越',beside:'在旁邊',
+  behind:'在後面',toward:'朝向',towards:'朝向',
+  among:'在…之中',despite:'儘管',except:'除了',
+  upon:'在…之上',per:'每',via:'透過',
+  // ── Negatives / Degree
+  not:'不',no:'不/沒有',never:'從不',
+  very:'非常',quite:'相當',rather:'相當',fairly:'頗為',
+  too:'太/也',also:'也',even:'甚至',only:'只有',
+  just:'只是/剛剛',almost:'幾乎',nearly:'幾乎',
+  already:'已經',still:'仍然',yet:'尚未',
+  again:'再次',once:'一次/曾經',twice:'兩次',
+  always:'總是',usually:'通常',often:'經常',sometimes:'有時',
+  rarely:'很少',seldom:'很少',never:'從不',
+  soon:'很快',immediately:'立即',quickly:'迅速地',slowly:'緩慢地',
+  carefully:'仔細地',clearly:'清楚地',directly:'直接地',
+  easily:'輕鬆地',simply:'簡單地',probably:'可能地',
+  certainly:'確實',definitely:'絕對',perhaps:'或許',maybe:'也許',
+  especially:'特別',particularly:'尤其',mainly:'主要地',
+  finally:'最後',recently:'最近',currently:'目前',
+  together:'一起',separately:'分開地',
+  enough:'足夠',
+  // ── Time words
+  now:'現在',then:'然後/當時',today:'今天',yesterday:'昨天',tomorrow:'明天',
+  morning:'早上',afternoon:'下午',evening:'傍晚',night:'晚上',
+  week:'週',month:'月',year:'年',decade:'十年',century:'世紀',
+  second:'秒/第二',minute:'分鐘',hour:'小時',
+  monday:'星期一',tuesday:'星期二',wednesday:'星期三',thursday:'星期四',
+  friday:'星期五',saturday:'星期六',sunday:'星期日',
+  january:'一月',february:'二月',march:'三月',april:'四月',
+  may:'五月',june:'六月',july:'七月',august:'八月',
+  september:'九月',october:'十月',november:'十一月',december:'十二月',
+  // ── Numbers
+  one:'一',two:'二',three:'三',four:'四',five:'五',
+  six:'六',seven:'七',eight:'八',nine:'九',ten:'十',
+  eleven:'十一',twelve:'十二',hundred:'百',thousand:'千',million:'百萬',
+  first:'第一',second:'第二',third:'第三',fourth:'第四',fifth:'第五',
+  // ── Common nouns (everyday)
+  home:'家',house:'房子',room:'房間',door:'門',window:'窗戶',
+  floor:'地板/樓層',wall:'牆壁',table:'桌子',chair:'椅子',
+  bed:'床',kitchen:'廚房',bathroom:'浴室',
+  person:'人',people:'人們',man:'男人',woman:'女人',
+  boy:'男孩',girl:'女孩',child:'孩子',children:'孩子們',
+  family:'家庭',friend:'朋友',friends:'朋友們',
+  name:'名字',word:'單字',sentence:'句子',
+  life:'生活/生命',world:'世界',country:'國家',city:'城市',
+  town:'鎮',village:'村莊',street:'街道',road:'道路',
+  school:'學校',class:'課堂/班級',teacher:'老師',student:'學生',
+  book:'書',page:'頁面',story:'故事',news:'新聞',
+  thing:'東西',stuff:'東西',matter:'事情/物質',
+  question:'問題',answer:'答案',idea:'想法',
+  reason:'原因',example:'例子',
+  change:'改變',difference:'差異',
+  group:'群組',team:'團隊',side:'側面',
+  head:'頭/領導',hand:'手',eye:'眼睛',face:'臉',
+  body:'身體',heart:'心/心臟',mind:'心智',
+  food:'食物',water:'水',air:'空氣',
+  money:'金錢',price:'價格',cost:'成本',
+  car:'汽車',road:'道路',
+  color:'顏色',size:'大小',
+  // ── Common verbs (irregular + base)
+  make:'製作',made:'製作（過去）',making:'製作（進行）',
+  take:'拿取',took:'拿取（過去）',taken:'拿取（完成）',taking:'拿取（進行）',
+  give:'給予',gave:'給予（過去）',given:'給予（完成）',giving:'給予（進行）',
+  get:'得到',got:'得到（過去）',gotten:'得到（完成）',getting:'得到（進行）',
+  go:'去',went:'去（過去）',gone:'去（完成）',going:'去（進行）',
+  come:'來',came:'來（過去）',coming:'來（進行）',
+  see:'看見',saw:'看見（過去）',seen:'看見（完成）',seeing:'看見（進行）',
+  know:'知道',knew:'知道（過去）',known:'知道（完成）',knowing:'知道（進行）',
+  think:'想/認為',thought:'想（過去）',thinking:'想（進行）',
+  say:'說',said:'說（過去）',saying:'說（進行）',
+  tell:'告訴',told:'告訴（過去）',telling:'告訴（進行）',
+  ask:'詢問',asked:'詢問（過去）',asking:'詢問（進行）',
+  use:'使用',used:'使用',using:'使用（進行）',
+  find:'找到',found:'找到（過去）',finding:'找到（進行）',
+  help:'幫助',helped:'幫助（過去）',helping:'幫助（進行）',
+  show:'展示',showed:'展示（過去）',shown:'展示（完成）',showing:'展示（進行）',
+  work:'工作',worked:'工作（過去）',working:'工作（進行）',
+  keep:'保持',kept:'保持（過去）',keeping:'保持（進行）',
+  want:'想要',wanted:'想要（過去）',wanting:'想要（進行）',
+  try:'嘗試',tried:'嘗試（過去）',trying:'嘗試（進行）',
+  need:'需要',needed:'需要（過去）',needing:'需要（進行）',
+  look:'看/尋找',looked:'看（過去）',looking:'看（進行）',
+  turn:'轉/變成',turned:'轉（過去）',turning:'轉（進行）',
+  start:'開始',started:'開始（過去）',starting:'開始（進行）',
+  play:'玩/播放',played:'玩（過去）',playing:'玩（進行）',
+  run:'跑',ran:'跑（過去）',running:'跑（進行）',
+  walk:'走路',walked:'走路（過去）',walking:'走路（進行）',
+  read:'閱讀',reading:'閱讀（進行）',
+  write:'寫',wrote:'寫（過去）',written:'寫（完成）',writing:'寫（進行）',
+  call:'打電話/叫',called:'打電話（過去）',calling:'打電話（進行）',
+  talk:'說話',talked:'說話（過去）',talking:'說話（進行）',
+  speak:'說話',spoke:'說話（過去）',spoken:'說話（完成）',speaking:'說話（進行）',
+  meet:'見面',met:'見面（過去）',meeting:'見面（進行）',
+  leave:'離開',left:'離開（過去）',leaving:'離開（進行）',
+  bring:'帶來',brought:'帶來（過去）',bringing:'帶來（進行）',
+  hold:'持有/舉辦',held:'持有（過去）',holding:'持有（進行）',
+  stand:'站立',stood:'站立（過去）',standing:'站立（進行）',
+  follow:'跟隨',followed:'跟隨（過去）',following:'跟隨（進行）',
+  stop:'停止',stopped:'停止（過去）',stopping:'停止（進行）',
+  open:'打開',opened:'打開（過去）',opening:'打開（進行）',
+  close:'關閉',closed:'關閉（過去）',closing:'關閉（進行）',
+  put:'放置',putting:'放置（進行）',
+  set:'設定',setting:'設定（進行）',
+  let:'讓',letting:'讓（進行）',
+  move:'移動',moved:'移動（過去）',moving:'移動（進行）',
+  live:'居住/生活',lived:'居住（過去）',living:'居住（進行）',
+  change:'改變',changed:'改變（過去）',changing:'改變（進行）',
+  become:'成為',became:'成為（過去）',becoming:'成為（進行）',
+  feel:'感覺',felt:'感覺（過去）',feeling:'感覺（進行）',
+  learn:'學習',learned:'學習（過去）',learning:'學習（進行）',
+  send:'發送',sent:'發送（過去）',sending:'發送（進行）',
+  receive:'收到',received:'收到（過去）',receiving:'收到（進行）',
+  pay:'付款',paid:'付款（過去）',paying:'付款（進行）',
+  buy:'購買',bought:'購買（過去）',buying:'購買（進行）',
+  sell:'賣出',sold:'賣出（過去）',selling:'賣出（進行）',
+  build:'建造',built:'建造（過去）',building:'建造（進行）',
+  create:'創造',created:'創造（過去）',creating:'創造（進行）',
+  develop:'發展',developed:'發展（過去）',developing:'發展（進行）',
+  increase:'增加',increased:'增加（過去）',increasing:'增加（進行）',
+  decrease:'減少',decreased:'減少（過去）',decreasing:'減少（進行）',
+  provide:'提供',provided:'提供（過去）',providing:'提供（進行）',
+  ensure:'確保',ensured:'確保（過去）',ensuring:'確保（進行）',
+  require:'要求',required:'要求（過去）',requiring:'要求（進行）',
+  include:'包含',included:'包含（過去）',including:'包含（進行）',
+  improve:'改善',improved:'改善（過去）',improving:'改善（進行）',
+  complete:'完成',completed:'完成（過去）',completing:'完成（進行）',
+  consider:'考慮',considered:'考慮（過去）',considering:'考慮（進行）',
+  decide:'決定',decided:'決定（過去）',deciding:'決定（進行）',
+  expect:'期望',expected:'期望（過去）',expecting:'期望（進行）',
+  prepare:'準備',prepared:'準備（過去）',preparing:'準備（進行）',
+  plan:'計畫',planned:'計畫（過去）',planning:'計畫（進行）',
+  schedule:'排程',scheduled:'排程（過去）',scheduling:'排程（進行）',
+  submit:'提交',submitted:'提交（過去）',submitting:'提交（進行）',
+  review:'審查',reviewed:'審查（過去）',reviewing:'審查（進行）',
+  approve:'批准',approved:'批准（過去）',approving:'批准（進行）',
+  apply:'申請',applied:'申請（過去）',applying:'申請（進行）',
+  offer:'提供/提議',offered:'提供（過去）',offering:'提供（進行）',
+  support:'支持',supported:'支持（過去）',supporting:'支持（進行）',
+  manage:'管理',managed:'管理（過去）',managing:'管理（進行）',
+  handle:'處理',handled:'處理（過去）',handling:'處理（進行）',
+  report:'報告',reported:'報告（過去）',reporting:'報告（進行）',
+  discuss:'討論',discussed:'討論（過去）',discussing:'討論（進行）',
+  explain:'解釋',explained:'解釋（過去）',explaining:'解釋（進行）',
+  announce:'宣布',announced:'宣布（過去）',announcing:'宣布（進行）',
+  confirm:'確認',confirmed:'確認（過去）',confirming:'確認（進行）',
+  contact:'聯繫',contacted:'聯繫（過去）',contacting:'聯繫（進行）',
+  hire:'雇用',hired:'雇用（過去）',hiring:'雇用（進行）',
+  join:'加入',joined:'加入（過去）',joining:'加入（進行）',
+  attend:'參加',attended:'參加（過去）',attending:'參加（進行）',
+  visit:'拜訪',visited:'拜訪（過去）',visiting:'拜訪（進行）',
+  return:'返回',returned:'返回（過去）',returning:'返回（進行）',
+  reach:'達到/到達',reached:'達到（過去）',reaching:'達到（進行）',
+  enter:'進入',entered:'進入（過去）',entering:'進入（進行）',
+  sign:'簽名',signed:'簽名（過去）',signing:'簽名（進行）',
+  check:'檢查',checked:'檢查（過去）',checking:'檢查（進行）',
+  update:'更新',updated:'更新（過去）',updating:'更新（進行）',
+  share:'分享',shared:'分享（過去）',sharing:'分享（進行）',
+  reduce:'減少',reduced:'減少（過去）',reducing:'減少（進行）',
+  maintain:'維持',maintained:'維持（過去）',maintaining:'維持（進行）',
+  expand:'擴大',expanded:'擴大（過去）',expanding:'擴大（進行）',
+  launch:'推出',launched:'推出（過去）',launching:'推出（進行）',
+  implement:'實施',implemented:'實施（過去）',implementing:'實施（進行）',
+  achieve:'達成',achieved:'達成（過去）',achieving:'達成（進行）',
+  succeed:'成功',succeeded:'成功（過去）',succeeding:'成功（進行）',
+  fail:'失敗',failed:'失敗（過去）',failing:'失敗（進行）',
+  agree:'同意',agreed:'同意（過去）',agreeing:'同意（進行）',
+  allow:'允許',allowed:'允許（過去）',allowing:'允許（進行）',
+  enable:'使能夠',enabled:'使能夠（過去）',enabling:'使能夠（進行）',
+  focus:'專注',focused:'專注（過去）',focusing:'專注（進行）',
+  assume:'假設',assumed:'假設（過去）',assuming:'假設（進行）',
+  ensure:'確保',
+  appear:'出現',appeared:'出現（過去）',appearing:'出現（進行）',
+  seem:'似乎',seemed:'似乎（過去）',seeming:'似乎（進行）',
+  remain:'保持/剩餘',remained:'保持（過去）',remaining:'保持（進行）',
+  happen:'發生',happened:'發生（過去）',happening:'發生（進行）',
+  produce:'生產',produced:'生產（過去）',producing:'生產（進行）',
+  collect:'收集',collected:'收集（過去）',collecting:'收集（進行）',
+  choose:'選擇',chose:'選擇（過去）',chosen:'選擇（完成）',choosing:'選擇（進行）',
+  measure:'衡量',measured:'衡量（過去）',measuring:'衡量（進行）',
+  replace:'替換',replaced:'替換（過去）',replacing:'替換（進行）',
+  solve:'解決',solved:'解決（過去）',solving:'解決（進行）',
+  carry:'攜帶',carried:'攜帶（過去）',carrying:'攜帶（進行）',
+  indicate:'表示',indicated:'表示（過去）',indicating:'表示（進行）',
+  // ── Common adjectives
+  good:'好的',great:'很棒的',excellent:'優秀的',outstanding:'傑出的',
+  bad:'壞的',poor:'差的',terrible:'糟糕的',
+  new:'新的',old:'舊的',recent:'最近的',current:'目前的',latest:'最新的',
+  big:'大的',large:'大的',huge:'巨大的',small:'小的',tiny:'微小的',
+  high:'高的',low:'低的',tall:'高的（身高）',short:'短的/矮的',
+  long:'長的',wide:'寬的',narrow:'窄的',
+  fast:'快速的',slow:'緩慢的',quick:'快速的',rapid:'迅速的',
+  easy:'容易的',difficult:'困難的',hard:'困難的/硬的',
+  important:'重要的',significant:'重要的',critical:'關鍵的',essential:'必要的',
+  main:'主要的',major:'主要的',minor:'次要的',primary:'主要的',
+  general:'一般的',specific:'特定的',particular:'特別的',
+  common:'常見的',usual:'通常的',normal:'正常的',regular:'定期的',
+  special:'特別的',unique:'獨特的',different:'不同的',similar:'相似的',
+  same:'相同的',equal:'相等的',
+  right:'正確的',wrong:'錯誤的',correct:'正確的',
+  true:'真的',false:'假的',real:'真實的',
+  free:'自由的/免費的',available:'可用的',ready:'準備好的',
+  necessary:'必要的',possible:'可能的',impossible:'不可能的',
+  able:'能夠的',capable:'有能力的',
+  full:'滿的',empty:'空的',complete:'完整的',partial:'部分的',
+  direct:'直接的',clear:'清楚的',simple:'簡單的',complex:'複雜的',
+  strong:'強的',weak:'弱的',
+  open:'開放的',closed:'關閉的',
+  public:'公開的',private:'私人的',
+  local:'本地的',global:'全球的',national:'全國的',international:'國際的',
+  personal:'個人的',professional:'專業的',official:'官方的',
+  financial:'財務的',economic:'經濟的',
+  annual:'年度的',monthly:'每月的',weekly:'每週的',daily:'每日的',
+  total:'總共的',overall:'整體的',entire:'全部的',
+  additional:'額外的',extra:'額外的',
+  original:'原始的',final:'最終的',
+  successful:'成功的',effective:'有效的',efficient:'有效率的',
+  certain:'確定的',sure:'確定的',likely:'可能的',
+  various:'各種的',several:'幾個',
+  future:'未來的',past:'過去的',previous:'之前的',
+  following:'以下的',
+  short:'短的',brief:'簡短的',
+  basic:'基本的',advanced:'進階的',
+  formal:'正式的',informal:'非正式的',
+  safe:'安全的',dangerous:'危險的',
+  happy:'快樂的',pleased:'高興的',satisfied:'滿意的',
+  concerned:'擔心的',interested:'感興趣的',
+  dedicated:'專注的/奉獻的',committed:'承諾的',
+  responsible:'負責任的',reliable:'可靠的',
+  qualified:'具資格的',experienced:'有經驗的',
+  // ── Common adverbs
+  well:'很好地',quickly:'迅速地',slowly:'緩慢地',
+  carefully:'仔細地',clearly:'清楚地',directly:'直接地',
+  easily:'輕鬆地',simply:'簡單地',properly:'適當地',
+  fully:'完全地',completely:'完全地',partially:'部分地',
+  highly:'非常/高度地',greatly:'極大地',significantly:'顯著地',
+  successfully:'成功地',effectively:'有效地',efficiently:'有效率地',
+  immediately:'立即',soon:'很快',recently:'最近',currently:'目前',
+  previously:'之前',finally:'最後',
+  together:'一起',separately:'分開地',
+  home:'在家/回家',
+  // ── Places & locations
+  here:'這裡',there:'那裡',where:'哪裡',
+  home:'家',office:'辦公室',store:'商店',shop:'商店',
+  building:'建築物',room:'房間',floor:'樓層',
+  area:'區域',region:'地區',location:'位置',
+  // ── Business & work nouns
+  work:'工作',job:'工作',career:'職業生涯',
+  company:'公司',business:'業務/商業',organization:'組織',firm:'公司',
+  office:'辦公室',department:'部門',team:'團隊',
+  staff:'員工',employee:'員工',employer:'雇主',manager:'經理',
+  director:'主任/董事',supervisor:'主管',executive:'高階主管',
+  colleague:'同事',client:'客戶',customer:'客戶',
+  position:'職位',role:'角色',responsibility:'責任',
+  salary:'薪資',wage:'工資',benefit:'福利',
+  contract:'合約',agreement:'協議',policy:'政策',
+  meeting:'會議',conference:'會議/研討會',presentation:'簡報',
+  report:'報告',document:'文件',memo:'備忘錄',
+  email:'電子郵件',letter:'信件',message:'訊息',
+  phone:'電話',call:'電話/打電話',
+  schedule:'時程',deadline:'截止日',appointment:'約會/預約',
+  project:'專案',task:'任務',goal:'目標',objective:'目標',
+  plan:'計畫',strategy:'策略',process:'流程',procedure:'程序',
+  result:'結果',outcome:'結果',performance:'表現',
+  success:'成功',achievement:'成就',progress:'進展',
+  problem:'問題',issue:'問題',challenge:'挑戰',
+  solution:'解決方案',decision:'決定',
+  information:'資訊',data:'資料',record:'記錄',
+  system:'系統',program:'計畫/程序',software:'軟體',
+  computer:'電腦',network:'網路',website:'網站',
+  file:'檔案',database:'資料庫',password:'密碼',
+  product:'產品',service:'服務',
+  market:'市場',industry:'產業',sector:'部門/行業',
+  sales:'銷售額',revenue:'營收',profit:'利潤',
+  cost:'成本',price:'價格',budget:'預算',expense:'費用',
+  investment:'投資',payment:'付款',invoice:'發票',
+  order:'訂單',account:'帳戶',
+  quality:'品質',standard:'標準',requirement:'要求',
+  training:'培訓',development:'發展',improvement:'改善',
+  feedback:'回饋',survey:'調查',review:'審查',
+  announcement:'公告',notice:'通知',update:'更新',
+  application:'申請/應用',resume:'履歷',interview:'面試',
+  equipment:'設備',facility:'設施',supply:'供應',inventory:'庫存',
+  branch:'分公司',headquarters:'總部',
+  // ── Quantity / measurement
+  number:'數量',amount:'數量',total:'總數',sum:'總和',
+  level:'水準/程度',rate:'比率',percentage:'百分比',
+  size:'大小',length:'長度',value:'價值',
+  increase:'增加',decrease:'減少',growth:'成長',
+  // ── Other common nouns
+  time:'時間',date:'日期',period:'時期',
+  year:'年',month:'月',week:'週',day:'天',
+  way:'方式',method:'方法',approach:'方式/方法',
+  part:'部分',section:'部分',step:'步驟',stage:'階段',
+  place:'地方',point:'點/要點',
+  thing:'東西',item:'項目',
+  group:'群組',member:'成員',event:'活動',
+  change:'改變',difference:'差異',
+  example:'例子',case:'案例',fact:'事實',
+  idea:'想法',opinion:'意見',view:'觀點',
+  purpose:'目的',reason:'原因',cause:'原因',
+  experience:'經驗',skill:'技能',knowledge:'知識',
+  ability:'能力',opportunity:'機會',
+  situation:'情況',condition:'條件',circumstance:'情況',
+  question:'問題',answer:'答案',
+  issue:'問題',concern:'擔憂',
+  importance:'重要性',benefit:'好處',advantage:'優勢',
+  impact:'影響',effect:'效果',
+  support:'支持',assistance:'協助',
+  request:'請求',response:'回應',
+  form:'表格',
+  // ── Other
+  such:'如此的',own:'自己的',
+  more:'更多',less:'更少',most:'最多',least:'最少',
+  up:'向上',down:'向下',out:'向外',back:'回/後',
+  on:'開啟/繼續',off:'關閉/離開',
+  around:'大約/環繞',
+  next:'下一個',last:'最後/上一個',
+  other:'其他',another:'另一個',else:'其他',
+  further:'更進一步',
+  per:'每',
+  between:'之間',
+  please:'請',thank:'感謝',thanks:'謝謝',
+  sorry:'抱歉',
+  yes:'是',yeah:'是的',ok:'好的',okay:'好的',
+  mr:'先生',mrs:'女士',ms:'女士',dr:'博士/醫生'
+};
+
+function buildGloss(sentence, targetWord){
+  const tgt=targetWord.toLowerCase();
+  const tokens=(sentence.match(/[\w']+|[.,!?;:]/g)||[]);
+  return tokens.map(tok=>{
+    if(/^[.,!?;:]$/.test(tok)) return {word:tok,zh:'',punct:true};
+    // Strip possessive 's first, then remaining apostrophes
+    const bare=tok.replace(/'s$/i,'').replace(/'/g,'').toLowerCase();
+    const isTarget=bare===tgt||tok.toLowerCase().replace(/'s$/i,'')===tgt;
+    // Lookup chain: WORDS → COMMON → try without trailing -s/-ed/-ing
+    let zh=null;
+    const wEntry=ALL_WORDS.find(x=>x.word.toLowerCase()===bare);
+    if(wEntry) zh=wEntry.zh;
+    if(!zh) zh=COMMON[bare]||null;
+    if(!zh){
+      // Try common stemming
+      const stems=[
+        bare.replace(/s$/,''),
+        bare.replace(/es$/,''),
+        bare.replace(/ies$/,'y'),
+        bare.replace(/ing$/,''),
+        bare.replace(/ed$/,''),
+        bare.replace(/er$/,''),
+      ];
+      for(const s of stems){
+        const we=ALL_WORDS.find(x=>x.word.toLowerCase()===s);
+        if(we){zh=we.zh;break;}
+        if(COMMON[s]){zh=COMMON[s];break;}
+      }
+    }
+    return {word:tok, zh, isTarget, punct:false};
+  });
+}
+
+function toggleZhTrans(){
+  const p=document.getElementById('zhtrans-panel');
+  const b=document.getElementById('zhtrans-btn');
+  if(!p)return;
+  const show=p.style.display==='none';
+  p.style.display=show?'block':'none';
+  if(b) b.textContent=show?'🌐 隱藏翻譯':'🌐 中文翻譯';
+}
+function toggleGloss(){
+  const p=document.getElementById('gloss-panel');
+  const b=document.getElementById('gloss-btn');
+  if(!p)return;
+  const show=p.style.display==='none'||!p.style.display;
+  p.style.display=show?'block':'none';
+  b.textContent=show?'🙈 隱藏單字解釋':'📖 查看單字解釋';
+}
+
+// ════════════════════════════════════════════════════
+// Storage
+// ════════════════════════════════════════════════════
+const S = {
+  get:(k,d)=>{try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):d;}catch{return d;}},
+  set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
+};
+const today=()=>new Date().toISOString().slice(0,10);
+
+function getSession(){
+  const t=today();
+  let s=S.get('sess',null);
+  if(!s||s.date!==t){
+    s={date:t,wordIds:pickWords(),learned:[],results:{},done:false};
+    S.set('sess',s);
+    bumpStreak(t);
+  }
+  return s;
+}
+function saveSession(s){S.set('sess',s);}
+
+function pickFrom(bank, recentKey, n){
+  const recent=S.get(recentKey,[]);
+  const pool=bank.filter(w=>!recent.includes(w.id));
+  const src=pool.length>=n?pool:bank;
+  const ids=[...src].sort(()=>Math.random()-.5).slice(0,n).map(w=>w.id);
+  S.set(recentKey,[...new Set([...recent,...ids])].slice(-40));
+  return ids;
+}
+function pickWords(){
+  const toeicIds=pickFrom(WORDS,'recent_toeic',10);
+  const nbaIds=pickFrom(NBA_WORDS,'recent_nba',10);
+  return [...toeicIds,...nbaIds];
+}
+
+function bumpStreak(t){
+  let hist=S.get('hist',{});
+  if(!hist[t]) hist[t]={score:null,done:false};
+  S.set('hist',hist);
+  // streak calc
+  let streak=0,d=new Date(t);
+  while(hist[d.toISOString().slice(0,10)]){streak++;d.setDate(d.getDate()-1);}
+  S.set('streak',streak);
+  document.getElementById('streak-num').textContent=streak;
+}
+
+function markDone(date,score){
+  let hist=S.get('hist',{});
+  hist[date]={score,done:true};
+  S.set('hist',hist);
+}
+function addWrong(id){
+  let ww=S.get('wrong',{});ww[id]=(ww[id]||0)+1;S.set('wrong',ww);
+}
+
+// ════════════════════════════════════════════════════
+// TTS
+// ════════════════════════════════════════════════════
+let ttsSpeed=parseFloat(S.get('ttsSpeed',0.9));
+let selectedVoiceURI=S.get('voiceURI','');
+let activeTts=null;
+
+function pickBestVoice(voices){
+  // Priority: saved preference → Google quality voices → en-US → any English
+  if(selectedVoiceURI){
+    const v=voices.find(v=>v.voiceURI===selectedVoiceURI);
+    if(v)return v;
+  }
+  const pref=['Google US English','Microsoft Aria Online','Microsoft Guy Online',
+    'Google UK English Female','Google UK English Male','Samantha','Alex'];
+  for(const name of pref){
+    const v=voices.find(v=>v.name===name);
+    if(v)return v;
+  }
+  // fallback: any Google voice in English
+  return voices.find(v=>v.name.startsWith('Google')&&v.lang.startsWith('en'))
+    ||voices.find(v=>v.lang==='en-US')
+    ||voices.find(v=>v.lang.startsWith('en'))
+    ||null;
+}
+
+function speak(text,btnEl){
+  if(!('speechSynthesis' in window))return;
+  if(activeTts){activeTts.classList.remove('playing');activeTts.textContent=activeTts.dataset.label||'🔊 發音';}
+  if(activeTts===btnEl&&speechSynthesis.speaking){speechSynthesis.cancel();activeTts=null;return;}
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='en-US'; u.rate=ttsSpeed;
+  const voices=speechSynthesis.getVoices();
+  const v=pickBestVoice(voices);
+  if(v)u.voice=v;
+  if(btnEl){
+    btnEl.dataset.label=btnEl.textContent;
+    btnEl.classList.add('playing');
+    btnEl.textContent='⏹ 停止';
+    activeTts=btnEl;
+  }
+  u.onend=()=>{
+    if(btnEl){btnEl.classList.remove('playing');btnEl.textContent=btnEl.dataset.label||'🔊 發音';}
+    if(activeTts===btnEl)activeTts=null;
+  };
+  speechSynthesis.speak(u);
+}
+
+function selectVoice(uri){
+  selectedVoiceURI=uri;
+  S.set('voiceURI',uri);
+  renderHistory();
+}
+
+function previewVoice(uri){
+  const voices=speechSynthesis.getVoices();
+  const v=voices.find(x=>x.voiceURI===uri);
+  if(!v)return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance('Hello! This is a pronunciation test.');
+  u.lang='en-US'; u.rate=ttsSpeed; u.voice=v;
+  speechSynthesis.speak(u);
+}
+
+function getEnVoices(){
+  return speechSynthesis.getVoices().filter(v=>v.lang.startsWith('en'));
+}
+
+// ════════════════════════════════════════════════════
+// State
+// ════════════════════════════════════════════════════
+let screen='home',learnIdx=0,quizIdx=0,quizAnswered=false;
+
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+function go(s){
+  speechSynthesis.cancel(); activeTts=null;
+  screen=s;
+  if(s==='learn')learnIdx=0;
+  if(s==='quiz'){
+    quizIdx=0; quizAnswered=false;
+    const sess=getSession();
+    if(!sess.quizOrder){sess.quizOrder=shuffle([...sess.wordIds]);saveSession(sess);}
+  }
+  document.querySelectorAll('.nav-link').forEach(b=>b.classList.remove('active'));
+  document.getElementById('nav-'+s)?.classList.add('active');
+  render();
+}
+
+// ════════════════════════════════════════════════════
+// HOME
+// ════════════════════════════════════════════════════
+function renderHome(){
+  const sess=getSession();
+  const streak=S.get('streak',0);
+  const hist=S.get('hist',{});
+  const totalDays=Object.keys(hist).length;
+  const totalWords=Math.min(S.get('recent_toeic',[]).length+S.get('recent_nba',[]).length,300);
+  const words=sess.wordIds.map(id=>ALL_WORDS.find(w=>w.id===id));
+  const total=sess.wordIds.length; // 20
+  const learnedN=sess.learned.length;
+  const quizN=Object.keys(sess.results).length;
+  const correctN=Object.values(sess.results).filter(Boolean).length;
+
+  const dots=words.map((w,i)=>{
+    const r=sess.results[w.id];
+    const cls=r===true?'done':r===false?'wrong':sess.learned.includes(w.id)?'active':'';
+    const isNba=w?.cat==='nba';
+    return `<div class="step-dot ${cls}" title="${w?.word||''}" style="${isNba&&cls==='active'?'border-color:#f97316;color:#f97316':''}">${i+1}</div>`;
+  }).join('');
+
+  const quizReady=learnedN===total&&!sess.done;
+  const allDone=sess.done;
+  const emoji=allDone?(correctN>=18?'🏆':correctN>=14?'🎉':correctN>=10?'👍':'💪'):'';
+
+  const wrongToday=allDone?words.filter(w=>sess.results[w.id]===false):[];
+
+  document.getElementById('page').innerHTML=`
+  <div class="home-hero fade">
+    <div class="home-hero-text">
+      <h1>今天學了嗎？</h1>
+      <p>${today().replace(/-/g,'/')} · 每天 20 個單字（10 📊 TOEIC + 10 🏀 NBA）</p>
+      ${allDone?`<p style="margin-top:12px;font-size:18px;font-weight:700;opacity:.9">${emoji} 今日完成！得分 ${correctN}/20</p>`:''}
+    </div>
+    <div class="home-hero-emoji">${allDone?emoji:'📚'}</div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-num">🔥 ${streak}</div><div class="stat-label">連續天數</div></div>
+    <div class="stat-card"><div class="stat-num">${totalDays}</div><div class="stat-label">學習天數</div></div>
+    <div class="stat-card"><div class="stat-num">${totalWords}</div><div class="stat-label">學過單字</div></div>
+  </div>
+
+  <div class="today-grid">
+    <div class="card fade" style="margin-bottom:0">
+      <div class="section-head" style="margin-bottom:14px">
+        <h2 style="font-size:16px">📅 今日進度</h2>
+        <span class="text-sm">${learnedN}/${total} 學習 · ${quizN}/${total} 測驗</span>
+      </div>
+      <div class="today-prog-wrap">${dots}</div>
+      <div class="prog-bar-wrap mt-2"><div class="prog-bar-fill" style="width:${quizN/total*100}%"></div></div>
+      <div class="mt-3">
+        ${allDone
+          ?`<button class="btn btn-ghost btn-full" onclick="go('quiz')">📋 查看測驗結果</button>`
+          :quizReady
+            ?`<button class="btn btn-primary btn-full btn-lg" onclick="go('quiz')">✏️ 開始填空測驗</button>`
+            :`<button class="btn btn-primary btn-full btn-lg" onclick="go('learn')">
+                📖 ${learnedN>0?'繼續學習（'+learnedN+'/'+total+'）':'開始今日學習'}
+              </button>`
+        }
+      </div>
+    </div>
+
+    <div class="card fade" style="margin-bottom:0">
+      <h2 style="font-size:16px;margin-bottom:14px">❌ ${allDone?'今日答錯單字':'尚未開始測驗'}</h2>
+      ${wrongToday.length===0
+        ?`<div class="text-sm" style="color:var(--text3)">${allDone?'🎉 全部答對了！':'完成學習後進行測驗，這裡會顯示答錯的單字。'}</div>`
+        :wrongToday.map(w=>`
+          <div class="wrong-list-item">
+            <button class="btn btn-ghost" style="padding:6px 10px;font-size:13px" onclick="speak('${w.word}',this)">🔊</button>
+            <div style="flex:1"><div style="font-weight:700">${w.word}</div><div class="text-sm">${w.zh}</div></div>
+          </div>`).join('')
+      }
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════
+// LEARN
+// ════════════════════════════════════════════════════
+function renderLearn(){
+  const sess=getSession();
+  const total=sess.wordIds.length; // 20
+  const words=sess.wordIds.map(id=>ALL_WORDS.find(w=>w.id===id));
+  const w=words[learnIdx];
+  const isNba=w.cat==='nba';
+  const catBadge=isNba
+    ?`<span style="background:#f97316;color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;letter-spacing:.5px">🏀 NBA</span>`
+    :`<span style="background:#4f46e5;color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;letter-spacing:.5px">📊 TOEIC</span>`;
+  const hlFull=w.full.replace(new RegExp(`\\b${w.word}\\b`,'i'),m=>`<span class="hl">${m}</span>`);
+  const pct=((learnIdx+1)/total*100).toFixed(0);
+
+  const segs=words.map((ww,i)=>{
+    const cls=i<learnIdx?'done':i===learnIdx?'active':'';
+    const color=ww?.cat==='nba'&&i===learnIdx?'style="border-color:#f97316;color:#f97316"':'';
+    return `<div class="step-dot ${cls}" ${color}>${i+1}</div>`;
+  }).join('');
+
+  document.getElementById('page').innerHTML=`
+  <div class="section-head">
+    <h2>📖 學習模式</h2>
+    <span class="text-sm">${learnIdx+1} / ${total}</span>
+  </div>
+
+  <div style="display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap">${segs}</div>
+  <div class="prog-bar-wrap" style="margin-bottom:24px"><div class="prog-bar-fill" style="width:${pct}%${isNba?';background:#f97316':''}"></div></div>
+
+  <div class="learn-layout fade">
+    <!-- Left: word hero -->
+    <div>
+      <div class="word-hero" style="${isNba?'background:linear-gradient(135deg,#f97316,#ef4444)':''}">
+        <div style="margin-bottom:10px">${catBadge}</div>
+        <div class="word-hero-word">${w.word}</div>
+        <button class="tts-btn" onclick="speak('${w.word}',this)">🔊 發音</button>
+      </div>
+    </div>
+
+    <!-- Right: meaning + example -->
+    <div>
+      <div class="meaning-block">
+        <div class="meaning-pos"><span class="tag tag-pos">${w.pos}</span></div>
+        <div class="meaning-zh">${w.zh}</div>
+      </div>
+
+      <div style="margin-bottom:8px;font-size:12px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.5px">例句</div>
+      <div class="example-block">${hlFull}</div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px">
+        <button class="example-tts-btn" data-sentence="${w.full.replace(/"/g,'&quot;').replace(/'/g,'&#39;')}" onclick="speak(this.dataset.sentence,this)">🔊 聽例句</button>
+        <button id="zhtrans-btn" class="btn btn-ghost" style="padding:5px 12px;font-size:13px" onclick="toggleZhTrans()">🌐 中文翻譯</button>
+        <button id="gloss-btn" class="btn btn-ghost" style="padding:5px 12px;font-size:13px" onclick="toggleGloss()">📖 單字解釋</button>
+      </div>
+      <div id="zhtrans-panel" style="display:none;margin-bottom:8px;padding:10px 14px;background:#f0f9ff;border-left:3px solid #0ea5e9;border-radius:0 8px 8px 0;font-size:14px;color:#0369a1;line-height:1.6">${w.zhFull||''}</div>
+      <div id="gloss-panel" class="gloss-panel" style="display:none">
+        <div class="gloss-grid">
+          ${buildGloss(w.full, w.word).filter(t=>!t.punct).map(t=>`
+            <div class="gloss-item${t.isTarget?' target':''}">
+              <div class="gloss-word">${t.word}</div>
+              <div class="gloss-zh">${t.zh||'—'}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="learn-nav">
+        ${learnIdx>0?`<button class="btn btn-ghost" onclick="learnNav(-1)">← 上一個</button>`:`<div></div>`}
+        <button class="btn btn-primary" style="flex:1;margin-left:auto${isNba?';background:#f97316':''};" onclick="learnNav(1)">
+          ${learnIdx<total-1?'下一個 →':'✅ 學習完成！'}
+        </button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function learnNav(dir){
+  const sess=getSession();
+  const words=sess.wordIds.map(id=>ALL_WORDS.find(w=>w.id===id));
+  const w=words[learnIdx];
+  if(!sess.learned.includes(w.id)){sess.learned.push(w.id);saveSession(sess);}
+  const total=sess.wordIds.length;
+  if(dir===1&&learnIdx>=total-1){go('home');return;}
+  learnIdx=Math.max(0,Math.min(total-1,learnIdx+dir));
+  render();
+}
+
+// ════════════════════════════════════════════════════
+// QUIZ
+// ════════════════════════════════════════════════════
+function buildChoices(wordId, sess){
+  if(!sess.choices) sess.choices={};
+  // Invalidate stale cache (old format had zh but no word)
+  if(sess.choices[wordId] && !sess.choices[wordId][0]?.word) delete sess.choices[wordId];
+  if(sess.choices[wordId]) return sess.choices[wordId];
+  const w=ALL_WORDS.find(x=>x.id===wordId);
+  let pool=shuffle(ALL_WORDS.filter(x=>x.id!==wordId&&x.pos===w.pos&&x.cat===w.cat));
+  // If not enough same-pos same-cat words, fall back to any same-cat word
+  if(pool.length<2) pool=shuffle(ALL_WORDS.filter(x=>x.id!==wordId&&x.cat===w.cat));
+  const distractors=pool.slice(0,2);
+  const opts=shuffle([
+    {id:w.id, word:w.word, correct:true},
+    ...distractors.map(x=>({id:x.id, word:x.word, correct:false}))
+  ]);
+  sess.choices[wordId]=opts;
+  return opts;
+}
+
+function renderQuiz(){
+  const sess=getSession();
+  const total=sess.wordIds.length; // 20
+  if(sess.learned.length<total){
+    document.getElementById('page').innerHTML=`
+    <div class="empty fade">
+      <div class="empty-icon">📖</div>
+      <h2 style="margin-bottom:8px;color:var(--text2)">尚未完成學習</h2>
+      <p>請先完成今日 ${total} 個單字的學習（已學 ${sess.learned.length}/${total}）</p>
+      <div class="mt-3"><button class="btn btn-primary btn-lg" onclick="go('learn')">前往學習 →</button></div>
+    </div>`;
+    return;
+  }
+  if(sess.done){renderResults();return;}
+  if(quizIdx>=total){finalizeQuiz();return;}
+
+  if(!sess.quizOrder){sess.quizOrder=shuffle([...sess.wordIds]);saveSession(sess);}
+  const wid=sess.quizOrder[quizIdx];
+  const w=ALL_WORDS.find(x=>x.id===wid);
+  const isNba=w.cat==='nba';
+  const correctN=Object.values(sess.results).filter(Boolean).length;
+  const answered=quizAnswered;
+  const result=answered?sess.results[w.id]:null;
+  const pct=((quizIdx+1)/total*100).toFixed(0);
+  const segs=sess.quizOrder.map((id,i)=>{
+    const ww=ALL_WORDS.find(x=>x.id===id);
+    const cls=i<quizIdx?'done':i===quizIdx?'active':'';
+    const color=ww?.cat==='nba'&&i===quizIdx?'style="border-color:#f97316;color:#f97316"':'';
+    return `<div class="step-dot ${cls}" ${color}>${i+1}</div>`;
+  }).join('');
+
+  const opts=buildChoices(w.id, sess);
+  if(!answered) saveSession(sess);
+  const labels=['A','B','C'];
+  const selId=answered?(sess.selectedChoices||{})[w.id]:null;
+  const wrongWord=(answered&&selId!==w.id)?ALL_WORDS.find(x=>x.id===selId):null;
+  const sentSafe=w.full.replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+
+  document.getElementById('page').innerHTML=`
+  <div class="quiz-layout fade">
+    <div class="quiz-header-row">
+      <h2>✏️ 選擇測驗</h2>
+      <div class="score-pill">✅ ${correctN} 答對</div>
+    </div>
+    <div style="display:flex;gap:6px;margin-bottom:12px">${segs}</div>
+    <div class="prog-bar-wrap" style="margin-bottom:28px"><div class="prog-bar-fill" style="width:${pct}%${isNba?';background:#f97316':''}"></div></div>
+
+    <div class="quiz-card">
+      <div class="quiz-hint-label" style="display:flex;align-items:center;gap:8px">
+        <span>題目 ${quizIdx+1} of ${total}</span>
+        ${isNba
+          ?`<span style="background:#f97316;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px">🏀 NBA</span>`
+          :`<span style="background:#4f46e5;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px">📊 TOEIC</span>`}
+      </div>
+
+      <div style="margin:14px 0 6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <button id="hint-btn" class="btn btn-ghost" style="padding:6px 14px;font-size:13px;border:1.5px dashed var(--indigo);color:var(--indigo)" onclick="
+          const p=document.getElementById('hint-panel');
+          const show=p.style.display==='none';
+          p.style.display=show?'flex':'none';
+          this.textContent=show?'🙈 隱藏中文提示':'💡 查看中文意思';
+        ">💡 查看中文意思</button>
+        <span class="tag tag-pos">${w.pos}</span>
+      </div>
+      <div id="hint-panel" style="display:none;margin-bottom:10px;padding:10px 14px;background:var(--indigo-l);border-radius:8px;align-items:center;gap:10px">
+        <span style="font-size:12px;font-weight:600;color:var(--indigo)">中文意思：</span>
+        <span style="font-size:15px;font-weight:700;color:var(--indigo)">${w.zh}</span>
+      </div>
+
+      <div style="margin-bottom:6px;font-size:12px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.5px">例句（找出填入空格的單字）</div>
+      <div class="blank-sentence" style="font-size:16px;padding:14px 16px">
+        ${w.blank.replace('___','<span class="blank-token">___</span>')}
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+        <button class="example-tts-btn" data-sentence="${sentSafe}" onclick="speak(this.dataset.sentence,this)">🔊 聽例句</button>
+        <button id="quiz-zhtrans-btn" class="btn btn-ghost" style="padding:4px 10px;font-size:12px" onclick="
+          const p=document.getElementById('quiz-zhtrans-panel');
+          const show=p.style.display==='none';
+          p.style.display=show?'block':'none';
+          this.textContent=show?'🌐 隱藏翻譯':'🌐 中文翻譯';
+        ">🌐 中文翻譯</button>
+      </div>
+      <div id="quiz-zhtrans-panel" style="display:none;margin-bottom:10px;padding:8px 12px;background:#f0f9ff;border-left:3px solid #0ea5e9;border-radius:0 8px 8px 0;font-size:13px;color:#0369a1;line-height:1.6">${w.zhFull||''}</div>
+
+      <div class="choice-list">
+        ${opts.map((opt,i)=>{
+          let cls='choice-btn';
+          if(answered){
+            if(opt.correct) cls+=' reveal';
+            else if(selId===opt.id) cls+=' wrong';
+          }
+          return `<div class="${cls}" role="button" tabindex="0" ${answered?'style="cursor:default"':''} onclick="if(!${answered})checkQ(${w.id},${opt.id})" style="justify-content:space-between;cursor:${answered?'default':'pointer'}">
+            <div style="display:flex;align-items:center;gap:12px;flex:1">
+              <span class="choice-label">${labels[i]}</span>
+              <span style="font-size:16px;font-weight:700">${opt.word}</span>
+            </div>
+            <button class="btn btn-ghost" style="padding:3px 10px;font-size:12px" onclick="event.stopPropagation();speak('${opt.word}',this)">🔊</button>
+          </div>`;
+        }).join('')}
+      </div>
+
+      <div class="feedback-box ${answered?'show '+(result?'correct':'wrong'):''}" id="feedback">
+        ${answered?(result
+          ?`✅ 正確！<strong>${w.word}</strong> = ${w.zh}
+           <div style="margin-top:6px;font-size:13px;color:var(--green);line-height:1.6">${w.full}</div>`
+          :`❌ 答錯了！
+           ${wrongWord?`<div style="margin-top:4px">你選的 <strong>${wrongWord.word}</strong> 意思是：${wrongWord.zh}</div>`:''}
+           <div style="margin-top:4px">正確答案是：<strong>${w.word}</strong> = ${w.zh}</div>
+           <div style="margin-top:6px;font-size:13px;line-height:1.6">${w.full}</div>`)
+        :''}
+      </div>
+    </div>
+
+    ${answered?`<div class="mt-3 flex-end"><button class="btn btn-primary btn-lg" onclick="nextQ()">
+      ${quizIdx<total-1?'下一題 →':'查看結果 🎯'}
+    </button></div>`:''}
+  </div>`;
+}
+
+function checkQ(wordId, selectedOptId){
+  const w=ALL_WORDS.find(x=>x.id===wordId);
+  const ok=(selectedOptId===wordId);
+  const sess=getSession();
+  sess.results[wordId]=ok;
+  if(!sess.selectedChoices) sess.selectedChoices={};
+  sess.selectedChoices[wordId]=selectedOptId;
+  saveSession(sess);
+  if(!ok) addWrong(wordId);
+  quizAnswered=true;
+  render();
+}
+function nextQ(){
+  const sess=getSession();
+  const total=sess.wordIds.length;
+  quizIdx++;quizAnswered=false;
+  if(quizIdx>=total){finalizeQuiz();return;}
+  render();
+}
+function finalizeQuiz(){
+  const sess=getSession();
+  sess.done=true;saveSession(sess);
+  const score=Object.values(sess.results).filter(Boolean).length;
+  markDone(sess.date,score);
+  renderResults();
+}
+
+function renderResults(){
+  const sess=getSession();
+  const words=sess.wordIds.map(id=>ALL_WORDS.find(w=>w.id===id));
+  const score=Object.values(sess.results).filter(Boolean).length;
+  const total=words.length; // 20
+  const emoji=score>=total*0.9?'🏆':score>=total*0.7?'🎉':score>=total*0.5?'👍':'💪';
+  const msg=score>=total*0.9?'完美！太厲害了！':score>=total*0.7?'很棒，繼續加油！':score>=total*0.5?'不錯，再接再厲！':'繼續練習，你可以的！';
+
+  document.getElementById('page').innerHTML=`
+  <div class="results-hero fade">
+    <div class="results-emoji">${emoji}</div>
+    <div class="results-score">${score}<span class="results-denom">/${total}</span></div>
+    <div class="results-label">${msg}</div>
+  </div>
+
+  <div class="card fade">
+    <div class="section-head"><h2>答題詳情</h2></div>
+    ${words.map(w=>{
+      const ok=sess.results[w.id];
+      const sentSafe=w.full.replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+      return `<div class="result-row" style="flex-direction:column;align-items:flex-start;gap:6px;padding:14px 0">
+        <div style="display:flex;align-items:center;gap:10px;width:100%">
+          <span class="result-status">${ok?'✅':'❌'}</span>
+          <div style="flex:1">
+            <div class="result-word">${w.word}
+              ${w.cat==='nba'
+                ?'<span style="background:#f97316;color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:20px;vertical-align:middle;margin-left:6px">🏀</span>'
+                :'<span style="background:#4f46e5;color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:20px;vertical-align:middle;margin-left:6px">📊</span>'}
+            </div>
+            <div class="result-zh">${w.zh}</div>
+          </div>
+          <button class="result-tts" onclick="speak('${w.word}',this)" title="發音">🔊</button>
+        </div>
+        <div style="padding-left:34px;width:100%">
+          <div style="font-size:13px;color:var(--text2);line-height:1.6">${w.full}</div>
+          ${w.zhFull?`<div style="font-size:12px;color:#0369a1;line-height:1.5;margin-top:3px;padding:5px 10px;background:#f0f9ff;border-radius:6px">${w.zhFull}</div>`:''}
+          <div style="display:flex;justify-content:flex-end;margin-top:4px">
+            <button class="result-tts" data-sentence="${sentSafe}" onclick="speak(this.dataset.sentence,this)" title="聽例句" style="font-size:14px">🔊句</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('')}
+  </div>
+
+  <div style="display:flex;gap:12px;margin-top:4px">
+    <button class="btn btn-ghost" style="flex:1" onclick="go('home')">← 回首頁</button>
+    <button class="btn btn-outline" style="flex:1" onclick="go('history')">📊 查看紀錄</button>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════
+// HISTORY
+// ════════════════════════════════════════════════════
+function renderHistory(){
+  const streak=S.get('streak',0);
+  const hist=S.get('hist',{});
+  const totalDays=Object.keys(hist).length;
+  const scores=Object.values(hist).map(h=>h.score).filter(s=>s!==null);
+  const avg=scores.length?(scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(1):'-';
+  const wrongData=S.get('wrong',{});
+  const topWrong=Object.entries(wrongData).sort((a,b)=>b[1]-a[1]).slice(0,10);
+
+  // Calendar: last 5 weeks (35 days)
+  const t=today();
+  const calStart=new Date(t);calStart.setDate(calStart.getDate()-34);
+  const calDays=[];
+  for(let i=0;i<=34;i++){
+    const d=new Date(calStart);d.setDate(calStart.getDate()+i);
+    const ds=d.toISOString().slice(0,10);
+    calDays.push({ds,done:!!hist[ds]?.done,today:ds===t});
+  }
+  const startDow=calStart.getDay(); // day of week offset
+
+  document.getElementById('page').innerHTML=`
+  <div class="section-head fade"><h2>📊 學習紀錄</h2></div>
+
+  <div class="hist-stats fade">
+    <div class="stat-card"><div class="stat-num">🔥 ${streak}</div><div class="stat-label">連續天數</div></div>
+    <div class="stat-card"><div class="stat-num">${totalDays}</div><div class="stat-label">學習天數</div></div>
+    <div class="stat-card"><div class="stat-num">${avg}</div><div class="stat-label">平均分數</div></div>
+  </div>
+
+  <div class="hist-grid fade">
+    <div>
+      <div class="card">
+        <div class="section-head" style="margin-bottom:12px"><h2 style="font-size:16px">近 5 週出勤</h2></div>
+        <div class="cal-labels">
+          ${['日','一','二','三','四','五','六'].map(d=>`<div class="cal-label">${d}</div>`).join('')}
+        </div>
+        <div class="cal-grid">
+          ${Array(startDow).fill('<div></div>').join('')}
+          ${calDays.map(d=>`<div class="cal-cell ${d.done?'done':''} ${d.today?'today':''}" title="${d.ds}"></div>`).join('')}
+        </div>
+        <div class="cal-legend">
+          <span><span class="leg-dot" style="background:var(--indigo);display:inline-block"></span> 完成</span>
+          <span><span class="leg-dot" style="background:var(--surface2);border:1px solid var(--border);display:inline-block"></span> 未學習</span>
+          <span><span class="leg-dot" style="border:2px solid var(--amber);display:inline-block"></span> 今天</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="section-head" style="margin-bottom:12px"><h2 style="font-size:16px">常錯單字</h2></div>
+        ${topWrong.length===0
+          ?'<div class="text-sm" style="color:var(--text3)">還沒有錯誤紀錄，繼續加油！</div>'
+          :topWrong.map(([id,cnt])=>{
+            const w=ALL_WORDS.find(x=>x.id==id);
+            return w?`<div class="wrong-word-row">
+              <button class="btn btn-ghost" style="padding:5px 10px;font-size:12px;flex-shrink:0" onclick="speak('${w.word}',this)">🔊</button>
+              <div style="flex:1;min-width:0"><div class="ww-word">${w.word}</div><div class="ww-zh">${w.zh}</div></div>
+              <span class="ww-badge">${cnt} 次</span>
+            </div>`:'';
+          }).join('')
+        }
+      </div>
+
+      <div class="card">
+        <div class="section-head" style="margin-bottom:12px"><h2 style="font-size:16px">語音設定</h2></div>
+        <div style="margin-bottom:14px">
+          <div class="text-sm" style="margin-bottom:6px;font-weight:600;color:var(--text2)">語速</div>
+          <div class="speed-wrap">
+            <span class="text-sm">慢</span>
+            <input type="range" min="0.5" max="1.5" step="0.1" value="${ttsSpeed}"
+              oninput="ttsSpeed=parseFloat(this.value);S.set('ttsSpeed',this.value);document.getElementById('spd').textContent=this.value+'x'">
+            <span class="text-sm">快</span>
+            <span class="speed-val" id="spd">${ttsSpeed}x</span>
+          </div>
+        </div>
+        <div>
+          <div class="text-sm" style="margin-bottom:8px;font-weight:600;color:var(--text2)">語音選擇 <span style="font-weight:400;color:#94a3b8">（選清楚的語音，建議 Google US English）</span></div>
+          <div id="voice-list" style="display:flex;flex-direction:column;gap:6px;max-height:260px;overflow-y:auto">
+            ${(()=>{
+              const vs=getEnVoices();
+              if(!vs.length)return '<p class="text-sm" style="color:#94a3b8;padding:8px 0">瀏覽器語音載入中，請稍後重新整理</p>';
+              const cur=selectedVoiceURI||(pickBestVoice(vs)||{}).voiceURI||'';
+              return vs.map(v=>{
+                const isSelected=v.voiceURI===cur;
+                const isGoogle=v.name.startsWith('Google');
+                return `<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;border:1.5px solid ${isSelected?'var(--indigo)':'var(--border)'};background:${isSelected?'var(--indigo-l)':'var(--surface2)'}">
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:13px;font-weight:600;color:var(--text1)">${v.name}${isGoogle?' ⭐':''}</div>
+                    <div style="font-size:11px;color:#94a3b8">${v.lang}${v.localService?' · 離線可用':' · 線上語音'}</div>
+                  </div>
+                  <button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;flex-shrink:0" onclick="previewVoice('${v.voiceURI.replace(/'/g,"\\'")}')">試聽</button>
+                  ${isSelected
+                    ?'<span style="font-size:12px;color:var(--indigo);font-weight:600;padding:4px 8px">✓ 使用中</span>'
+                    :`<button class="btn btn-primary" style="padding:4px 10px;font-size:12px;flex-shrink:0" onclick="selectVoice('${v.voiceURI.replace(/'/g,"\\'")}')">選擇</button>`
+                  }
+                </div>`;
+              }).join('');
+            })()}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════
+// Router
+// ════════════════════════════════════════════════════
+function render(){
+  const p=document.getElementById('page');
+  p.style.opacity='0';
+  setTimeout(()=>{
+    if(screen==='home')renderHome();
+    else if(screen==='learn')renderLearn();
+    else if(screen==='quiz')renderQuiz();
+    else if(screen==='history')renderHistory();
+    p.style.opacity='1';
+    p.style.transition='opacity .2s';
+  },60);
+}
+
+// Init
+document.getElementById('streak-num').textContent=S.get('streak',0);
+if(speechSynthesis.onvoiceschanged!==undefined)speechSynthesis.onvoiceschanged=()=>{};
+setTimeout(()=>speechSynthesis.getVoices(),300);
+render();
+</script>
+</body>
+</html>
