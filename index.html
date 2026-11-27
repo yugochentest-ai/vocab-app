@@ -434,7 +434,7 @@ nav { display: flex; gap: 2px; flex: 1; }
 
 <script>
 // ════════════════════════════════════════════════════
-// WORD BANK  (150 TOEIC words)
+// WORD BANK  (TOEIC words: IDs 1–165; new words use max ID across all banks + 1)
 // ════════════════════════════════════════════════════
 const RAW=[
 [1,"accomplish","/əˈkʌmplɪʃ/","v.","完成；達成","She worked hard to {w} all her goals before the deadline.","她努力在截止日期前完成了所有目標。"],
@@ -596,7 +596,12 @@ const RAW=[
 [157,"appreciate","/əˈpriʃiˌeɪt/","v.","感謝；欣賞","I really {w} you driving me to the airport.","真的很感謝你開車送我去機場。"],
 [158,"thoughtful","/ˈθɔtfəl/","adj.","體貼的；周到的","It was very {w} of you to remember my birthday.","你記得我的生日，真是太貼心了。"],
 [159,"generous","/ˈdʒɛnərəs/","adj.","慷慨的；大方的","Thank you for the {w} gift — you shouldn't have!","謝謝你這麼大方的禮物，你太破費了！"],
-[160,"favor","/ˈfeɪvɚ/","n.","幫忙；恩惠","Thanks for doing me a {w}. I owe you one!","謝謝你幫我這個忙，我欠你一次！"]
+[160,"favor","/ˈfeɪvɚ/","n.","幫忙；恩惠","Thanks for doing me a {w}. I owe you one!","謝謝你幫我這個忙，我欠你一次！"],
+[161,"punctual","/ˈpʌŋktʃuəl/","adj.","準時的；守時的","Nate promised his boss he would be more {w} from now on.","Nate 向老闆保證以後會更準時。"],
+[162,"commute","/kəˈmjuːt/","v.","通勤","Many people {w} to the city center by MRT every day.","許多人每天搭捷運通勤到市中心。"],
+[163,"privacy","/ˈpraɪvəsi/","n.","隱私","Please respect my {w} and don't read my messages.","請尊重我的隱私，不要看我的訊息。"],
+[164,"masterpiece","/ˈmæstərpiːs/","n.","傑作；名作","Many people think Water Lilies is Monet's greatest {w}.","許多人認為《睡蓮》是莫內最偉大的傑作。"],
+[165,"affordable","/əˈfɔːrdəbəl/","adj.","負擔得起的；平價的","Fast food is popular because it is quick and {w}.","速食很受歡迎，因為它又快又平價。"]
 ];
 
 const WORDS = RAW.map(([id,word,phonetic,pos,zh,raw,zhFull])=>({
@@ -606,7 +611,7 @@ const WORDS = RAW.map(([id,word,phonetic,pos,zh,raw,zhFull])=>({
 }));
 
 // ════════════════════════════════════════════════════
-// NBA WORD BANK (IDs 201–360)
+// NBA WORD BANK (IDs 201–365; new words use max ID across all banks + 1)
 // ════════════════════════════════════════════════════
 const NBA_RAW = [
 [201,"inspire","/ɪnˈspaɪər/","v.","激勵；啟發","Durant's work ethic continues to {w} the next generation of players to push their limits.","杜蘭特的職業道德持續激勵著下一代球員突破自我極限。"],
@@ -768,7 +773,12 @@ const NBA_RAW = [
 [357,"deficit","/ˈdɛfəsɪt/","n.","落後的分數；赤字","The team came back from a 15-point {w} to win the game.","這支球隊從落後15分反敗為勝。"],
 [358,"contention","/kənˈtɛnʃən/","n.","競爭；仍有機會奪冠的狀態","With two games left, our team is still in {w} for first place.","還剩兩場比賽，我們的隊伍仍有機會爭奪第一名。"],
 [359,"clinch","/klɪntʃ/","v.","確定贏得；鎖定","One more win will {w} the top spot in the group.","再贏一場就能鎖定小組第一。"],
-[360,"vintage","/ˈvɪntɪdʒ/","adj.","經典的；展現巔峰水準的","Fans loved his {w} performance; it reminded them of his best years.","球迷很愛他這場經典演出，讓人想起他的巔峰時期。"]
+[360,"vintage","/ˈvɪntɪdʒ/","adj.","經典的；展現巔峰水準的","Fans loved his {w} performance; it reminded them of his best years.","球迷很愛他這場經典演出，讓人想起他的巔峰時期。"],
+[361,"pause","/pɔːz/","n.","暫停；中止","The league took a short {w} to celebrate Thanksgiving.","聯盟短暫暫停賽事來慶祝感恩節。"],
+[362,"slate","/sleɪt/","n.","（比賽）賽程表；一系列安排","Friday's 11-game {w} will decide who advances in the Cup.","週五的 11 場賽程將決定誰能在盃賽中晉級。"],
+[363,"finale","/fɪˈnæli/","n.","終場；壓軸；最後一場","Fans packed the arena for the exciting {w} of group play.","球迷擠滿球館，觀看小組賽精彩的最後一戰。"],
+[364,"climactic","/klaɪˈmæktɪk/","adj.","高潮的；最關鍵的","Everyone held their breath during the {w} final seconds of the game.","比賽最關鍵的最後幾秒，大家都屏住了呼吸。"],
+[365,"storyline","/ˈstɔːrilaɪn/","n.","故事主線；焦點話題","The biggest {w} this week is which teams will make the knockout round.","本週最大的焦點話題是哪些球隊能打進淘汰賽。"]
 ];
 const NBA_WORDS = NBA_RAW.map(([id,word,phonetic,pos,zh,raw,zhFull])=>({
   id, word, phonetic, pos, zh, zhFull, cat:'nba',
